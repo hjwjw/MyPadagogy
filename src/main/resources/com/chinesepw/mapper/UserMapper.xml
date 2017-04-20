@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinesepw.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.chinesepw.po.User" >
+    <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="LOGO" property="logo" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="LATE_TIME" property="lateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, USERNAME, LOGO, PASSWORD, LATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinesepw.po.User" >
+    insert into user (USER_ID, USERNAME, LOGO, 
+      PASSWORD, LATE_TIME)
+    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{lateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinesepw.po.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="logo != null" >
+        LOGO,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="lateTime != null" >
+        LATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lateTime != null" >
+        #{lateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinesepw.po.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        LOGO = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="lateTime != null" >
+        LATE_TIME = #{lateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.User" >
+    update user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      LOGO = #{logo,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      LATE_TIME = #{lateTime,jdbcType=DATE}
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

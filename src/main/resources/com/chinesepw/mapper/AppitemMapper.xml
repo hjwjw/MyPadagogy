@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinesepw.mapper.AppitemMapper" >
+  <resultMap id="BaseResultMap" type="com.chinesepw.po.Appitem" >
+    <id column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DOWN_LINK" property="downLink" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="DATE" />
+    <result column="STATE" property="state" jdbcType="BIT" />
+    <result column="COUNT" property="count" jdbcType="INTEGER" />
+    <result column="SUPPORT" property="support" jdbcType="INTEGER" />
+    <result column="DISLIKE" property="dislike" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinesepw.po.Appitem" extends="BaseResultMap" >
+    <result column="INTRODUCE" property="introduce" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    APP_ID, USER_ID, NAME, DOWN_LINK, CREATETIME, STATE, COUNT, SUPPORT, DISLIKE
+  </sql>
+  <sql id="Blob_Column_List" >
+    INTRODUCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from appitem
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from appitem
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinesepw.po.Appitem" >
+    insert into appitem (APP_ID, USER_ID, NAME, 
+      DOWN_LINK, CREATETIME, STATE, 
+      COUNT, SUPPORT, DISLIKE, 
+      INTRODUCE)
+    values (#{appId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{downLink,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, #{state,jdbcType=BIT}, 
+      #{count,jdbcType=INTEGER}, #{support,jdbcType=INTEGER}, #{dislike,jdbcType=INTEGER}, 
+      #{introduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinesepw.po.Appitem" >
+    insert into appitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="downLink != null" >
+        DOWN_LINK,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="count != null" >
+        COUNT,
+      </if>
+      <if test="support != null" >
+        SUPPORT,
+      </if>
+      <if test="dislike != null" >
+        DISLIKE,
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="downLink != null" >
+        #{downLink,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="support != null" >
+        #{support,jdbcType=INTEGER},
+      </if>
+      <if test="dislike != null" >
+        #{dislike,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinesepw.po.Appitem" >
+    update appitem
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="downLink != null" >
+        DOWN_LINK = #{downLink,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=BIT},
+      </if>
+      <if test="count != null" >
+        COUNT = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="support != null" >
+        SUPPORT = #{support,jdbcType=INTEGER},
+      </if>
+      <if test="dislike != null" >
+        DISLIKE = #{dislike,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        INTRODUCE = #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinesepw.po.Appitem" >
+    update appitem
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      DOWN_LINK = #{downLink,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=DATE},
+      STATE = #{state,jdbcType=BIT},
+      COUNT = #{count,jdbcType=INTEGER},
+      SUPPORT = #{support,jdbcType=INTEGER},
+      DISLIKE = #{dislike,jdbcType=INTEGER},
+      INTRODUCE = #{introduce,jdbcType=LONGVARCHAR}
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Appitem" >
+    update appitem
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      DOWN_LINK = #{downLink,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=DATE},
+      STATE = #{state,jdbcType=BIT},
+      COUNT = #{count,jdbcType=INTEGER},
+      SUPPORT = #{support,jdbcType=INTEGER},
+      DISLIKE = #{dislike,jdbcType=INTEGER}
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </update>
+</mapper>

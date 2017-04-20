@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinesepw.mapper.KeywordMapper" >
+  <resultMap id="BaseResultMap" type="com.chinesepw.po.Keyword" >
+    <id column="KEY_ID" property="keyId" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinesepw.po.Keyword" extends="BaseResultMap" >
+    <result column="NAME" property="name" jdbcType="VARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    KEY_ID, DESCRIPTION
+  </sql>
+  <sql id="Blob_Column_List" >
+    NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from keyword
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from keyword
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinesepw.po.Keyword" >
+    insert into keyword (KEY_ID, DESCRIPTION, NAME
+      )
+    values (#{keyId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinesepw.po.Keyword" >
+    insert into keyword
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        KEY_ID,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="keyId != null" >
+        #{keyId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinesepw.po.Keyword" >
+    update keyword
+    <set >
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinesepw.po.Keyword" >
+    update keyword
+    set DESCRIPTION = #{description,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARBINARY}
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Keyword" >
+    update keyword
+    set DESCRIPTION = #{description,jdbcType=VARCHAR}
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </update>
+</mapper>
