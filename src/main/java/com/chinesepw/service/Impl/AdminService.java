@@ -1,5 +1,7 @@
 package com.chinesepw.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,11 @@ public class AdminService implements IAdminService {
 	@Override
 	public int updateByPrimaryKey(Admin record) {
 		return adminMapper.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public List<Admin> queryAll() {
+		return adminMapper.queryAll();
 	}
 
 }

@@ -1,8 +1,12 @@
 package com.chinesepw.mapper;
 
+import java.util.List;
+
 import com.chinesepw.po.Admin;
 
 public interface AdminMapper {
+	List<Admin> queryAll();
+	
     int deleteByPrimaryKey(Integer id);
 
     int insert(Admin record);

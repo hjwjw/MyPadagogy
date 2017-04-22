@@ -1,8 +1,12 @@
 package com.chinesepw.service;
 
+import java.util.List;
+
 import com.chinesepw.po.Admin;
 
 public interface IAdminService {
+	public List<Admin> queryAll();
+	
     public int deleteByPrimaryKey(Integer id);
 
     public int insert(Admin record);
