@@ -4,11 +4,16 @@
   <resultMap id="BaseResultMap" type="com.chinesepw.po.Apptype" >
     <id column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     TYPE_ID, NAME, PARENT_ID
   </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from apptype
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -22,7 +27,7 @@
   <insert id="insert" parameterType="com.chinesepw.po.Apptype" >
     insert into apptype (TYPE_ID, NAME, PARENT_ID
       )
-    values (#{typeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+    values (#{typeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.chinesepw.po.Apptype" >
@@ -46,7 +51,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
+        #{parentId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -57,7 +62,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        PARENT_ID = #{parentId,jdbcType=INTEGER},
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
       </if>
     </set>
     where TYPE_ID = #{typeId,jdbcType=INTEGER}
@@ -65,7 +70,7 @@
   <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Apptype" >
     update apptype
     set NAME = #{name,jdbcType=VARCHAR},
-      PARENT_ID = #{parentId,jdbcType=INTEGER}
+      PARENT_ID = #{parentId,jdbcType=VARCHAR}
     where TYPE_ID = #{typeId,jdbcType=INTEGER}
   </update>
 </mapper>

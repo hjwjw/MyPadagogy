@@ -21,6 +21,11 @@
   <sql id="Blob_Column_List" >
     INTRODUCE
   </sql>
+  <select id="queryAll" resultMap="ResultMapWithBLOBs" >
+  	select 
+  	<include refid="Base_Column_List" />
+  	from appitem
+  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

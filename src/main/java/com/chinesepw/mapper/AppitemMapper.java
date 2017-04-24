@@ -1,8 +1,12 @@
 package com.chinesepw.mapper;
 
+import java.util.List;
+
 import com.chinesepw.po.Appitem;
 
 public interface AppitemMapper {
+	List<Appitem> queryAll();
+	
     int deleteByPrimaryKey(Integer appId);
 
     int insert(Appitem record);

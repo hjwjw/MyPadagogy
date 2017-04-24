@@ -5,7 +5,7 @@ public class Apptype {
 
     private String name;
 
-    private Integer parentId;
+    private String parentId;
 
     public Integer getTypeId() {
         return typeId;
@@ -23,11 +23,11 @@ public class Apptype {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 }
