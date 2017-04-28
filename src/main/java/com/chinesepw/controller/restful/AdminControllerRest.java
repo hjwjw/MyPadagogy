@@ -54,22 +54,6 @@ public class AdminControllerRest {
 	}
 
 	/**
-	 * 新增，录入全部数据
-	 * 
-	 * @param record
-	 * @return
-	 */
-	/*@RequestMapping(value = "/add", method = { RequestMethod.POST })
-	public Result<Integer> insert(Admin record, HttpServletRequest req, HttpServletResponse resp) {
-		Integer i = 0;
-		if (record != null) {
-			i = iAdminService.insert(record);
-			return new Result<Integer>("success", 0, i);
-		}
-		return new Result<Integer>("erro", -1, null);
-	}*/
-
-	/**
 	 * 新增，录入部分数据或全部数据
 	 * @param record
 	 * @return
@@ -101,23 +85,6 @@ public class AdminControllerRest {
 		
 	}
 
-	/**
-	 * 更新管理员信息
-	 * 
-	 * @param record
-	 * @return
-	 */
-	/*@RequestMapping(value="/updateSelective",method=RequestMethod.POST)
-	public Result<Integer> updateByPrimaryKeySelective(Admin record, HttpServletRequest req, HttpServletResponse resp) {
-		Integer i = 0;
-		if (record != null) {
-			i = iAdminService.updateByPrimaryKeySelective(record);
-			return new Result<Integer>("success", 0, i);
-		}
-		return new Result<Integer>("erro", -1, null);
-		
-	}*/
-	
 	/**
 	 * 更新管理员信息
 	 * 

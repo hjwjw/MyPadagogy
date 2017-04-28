@@ -9,6 +9,18 @@
   <sql id="Base_Column_List" >
     KEYLIST_ID, KEY_ID, APP_ID
   </sql>
+  <select id="selectKeywordByAppId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select
+  	<include refid="Base_Column_List" />
+  	from keywordlist
+  	where APP_ID = #{appId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAppItemByKeyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select
+  	<include refid="Base_Column_List" />
+  	from keywordlist
+  	where KEY_ID = #{keyId,jdbcType=INTEGER}  
+  </select> 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
