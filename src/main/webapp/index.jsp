@@ -10,25 +10,24 @@
 <title>测试</title>
 </head>
 <body>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			$("#sub").click(function() {
 				alert("在这");
 				$.ajax({
-					type : "get",
-					url : "type/query",
-					/* data : {
-						_method : "put",
+					type : "post",
+					url : "manager",
+					data : {
 						name : "hsj",
 						pwd : "hsj123"
-					}, */
+					}, 
 					success : function(data) {
 						console.log(data);
 					}
 				});
 			})
 		});
-	</script>
+	</script> -->
 	
 <!-- <div class="panel-group" id="accordion">
 <ul>
@@ -60,12 +59,12 @@
    </div> -->
 	
 	
-	<!-- <form method="post" action="type/insert">
-	 类名:<input type="text" name="name">
+	<form method="post" action="type/insert">
+	 名:<input type="text" name="name">
 	父类:<input type="text" name="parentId"> 
-	 时间<input type="date" name="lateTime"> 
-	<button type="submit" id="sub">提交</button>
-	</form>  -->
-	<button type="submit" id="sub">提交</button>
+	 <!-- 时间<input type="date" name="lateTime">  -->
+	<button type="submit" >提交</button>
+	</form>  
+	<!-- <button type="submit" id="sub">提交</button> -->
 </body>
 </html>

@@ -18,7 +18,7 @@ import com.chinesepw.service.ITypeService;
  * 
  */
 @Controller
-@RequestMapping(value="type")
+@RequestMapping(value="/type")
 public class TypeController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class TypeController {
 	public List<Apptype> query() {
 		return iTypeService.query();
 	}
-	
+	 
 	
 	@RequestMapping(value="/del/{id}",method=RequestMethod.GET)
 	public int deleteByPrimaryKey(@PathVariable("id") Integer typeId) {

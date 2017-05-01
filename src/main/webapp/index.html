@@ -31,11 +31,17 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
-	
+	        <!-- ReactJs -->
+   	<script  src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+   	<script  src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.min.js"></script> 
 </head>
 
  <body>
 <header>
+    <div id="container">
+        <!-- This element's contents will be replaced with your component. -->
+    </div>
   <!-- ########################### -->
   <div class="top container">
     <div class="row">
@@ -587,6 +593,27 @@
             });
         });
 
+    </script>
+    <script type="text/javascript">
+     //创建一个组件
+        var Hello = React.createClass({
+         //添加样式对象,注意属性名在这里需要使用驼峰形式
+         /*也可以直接在html中添加样式类名：需要使用className 而不是class(Js中的关键字)*/
+             var styleObj = {
+             color:#f00,
+             fontSize:100px
+             },
+             render: function() {
+             //this.props 指在属性的集合
+             return "<div style={styleObj}>Hello {this.props.name}</div>"
+             }
+        });
+         
+        //将 解析成DOM节点并插入到浏览器的DOM结构中。 附带一个属性：name
+        ReactDOM.render(
+            <Hello name="World" />,
+            document.getElementById('container')
+        ); 
     </script>
 </body>
 </html>
