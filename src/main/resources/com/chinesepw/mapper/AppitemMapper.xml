@@ -30,6 +30,14 @@
   	from appitem
   	where STATE = 1
   </select>
+  <select id="queryPending" resultMap="ResultMapWithBLOBs" >
+  	select 
+  	<include refid="Base_Column_List" />
+  	,
+  	<include refid="Blob_Column_List" />
+  	from appitem
+  	where STATE = 0
+  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

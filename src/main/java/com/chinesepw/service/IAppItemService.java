@@ -13,6 +13,8 @@ import com.chinesepw.po.AppitemCustom;
 public interface IAppItemService {
 	public List<AppitemCustom> queryAll();
 	
+	public List<AppitemCustom> queryPending();
+	
 	public int deleteByPrimaryKey(Integer appId);
 
     public int insertSelective(Appitem record);

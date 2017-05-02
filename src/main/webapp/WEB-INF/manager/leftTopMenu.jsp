@@ -48,7 +48,7 @@
                                 <a href="appItem/queryAll"><i class="fa fa-list-alt"></i>全部文章</a>
                             </li>
                             <li>
-                                <a href="notification.html"><i class="fa fa-check-square"></i>待审核文章</a>
+                                <a href="appItem/queryPending"><i class="fa fa-check-square"></i>待审核文章</a>
                             </li>
                              <li>
                                 <a href="appItem/toAdd"><i class="fa fa-edit "></i>添加新文章</a>

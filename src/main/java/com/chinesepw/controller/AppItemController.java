@@ -49,7 +49,6 @@ public class AppItemController {
 			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemList = iAppItemService.queryAll();
-		System.out.println(appitemList);
 		for (AppitemCustom ac : appitemList) {
 			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
 			ac.setTypeName(this.getTypeName(ac.getAppId()));
@@ -65,12 +64,32 @@ public class AppItemController {
 		return "/WEB-INF/manager/appList";
 	}
 	
+	@RequestMapping(value="/queryPending",method =RequestMethod.GET)
+	public String queryPending(Model model, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<AppitemCustom> appitemPendingList = iAppItemService.queryPending();
+		for (AppitemCustom ac : appitemPendingList) {
+			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			ac.setTypeName(this.getTypeName(ac.getAppId()));
+			ac.setStateStr("未通过");
+		} 
+		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemPendingList);
+		model.addAttribute("appList", appitemPendingList);
+		model.addAttribute("page", pageInfo);
+		return "/WEB-INF/manager/pendingItem";
+	}
+	
 	@RequestMapping(value="/del/{id}",method=RequestMethod.GET)
-	public String deleteByPrimaryKey(@PathVariable("id") Integer appId) {
+	public String deleteByPrimaryKey(@PathVariable("id") Integer appId,HttpServletRequest req, HttpServletResponse resp) {
 		/*关联删除*/
 		iApptypelistService.deleteByappId(appId);
 		iAppItemService.deleteByPrimaryKey(appId);
-		return "redirect: ../queryAll";
+		if (req.getParameter("p").equals("pending")) {
+			return "redirect: ../queryPending";
+		}else{
+			return "redirect: ../queryAll";
+		}
 	}
 	
 	@RequestMapping(value="/selectDel",method=RequestMethod.POST)
@@ -82,10 +101,14 @@ public class AppItemController {
 				iAppItemService.deleteByPrimaryKey(Integer.parseInt(appId));			
 			}
 		}
-		return "redirect: queryAll";
+		if (req.getParameter("p").equals("pending")) {
+			return "redirect: queryPending";
+		}else{
+			return "redirect: queryAll";
+		}
 	}
 
-	@RequestMapping(value="/toAdd",method=RequestMethod.POST)
+	@RequestMapping(value="/toAdd",method=RequestMethod.GET)
 	public String toAdd() {
 		return "/WEB-INF/manager/addApp";
 	}
@@ -108,36 +131,52 @@ public class AppItemController {
 		return "/WEB-INF/manager/addApp";
 	}
 	
-	
 	@RequestMapping(value="update/{id}",method=RequestMethod.POST)
 	public String updateByPrimaryKeyWithBLOBs(Appitem record) {
 		iAppItemService.updateByPrimaryKeyWithBLOBs(record);
 		return "redirect: ../queryAll";
 	}
 	
-	@RequestMapping(value="/changeState")
+	@RequestMapping(value="/changeState",method=RequestMethod.POST)
 	public String changeState(HttpServletRequest req, HttpServletResponse resp) {
 		String[] appinfos = req.getParameterValues("appinfo");
 		for (String appId : appinfos) {
 			if (appId !=null) {
 				System.out.println(iAppItemService.selectByPrimaryKey(Integer.parseInt(appId)).getState());
 				Appitem appitem = iAppItemService.selectByPrimaryKey(Integer.parseInt(appId));
-				appitem.setState(false);
+				if (appitem.getState()) {
+					appitem.setState(false);
+				}else {
+					appitem.setState(true);
+				}
 				updateByPrimaryKeyWithBLOBs(appitem);
-				
 			}
 		}
-		return "redirect: queryAll";
+		if (req.getParameter("p").equals("pending")) {
+			return "redirect: queryPending";
+		}else{
+			return "redirect: queryAll";
+		}
 	}
 
-	@RequestMapping(value="/changeStateById/{id}")
+	@RequestMapping(value="/changeStateById/{id}",method=RequestMethod.GET)
 	public String changeStateById(@PathVariable("id") Integer appId,HttpServletRequest req, HttpServletResponse resp) {
 		if (appId !=null) {
 			Appitem appitem = iAppItemService.selectByPrimaryKey(appId);
-			appitem.setState(false);
+			if (appitem.getState()) {
+				appitem.setState(false);
+			}else {
+				appitem.setState(true);
+			}
 			updateByPrimaryKeyWithBLOBs(appitem);
 		}
-		return "redirect: ../queryAll";
+		System.out.println("P:" + req.getParameter("p"));
+		if (req.getParameter("p").equals("pending")) {
+			return "redirect: ../queryPending";
+		}else{
+			return "redirect: ../queryAll";
+		}
+		
 	}	
 	
 	

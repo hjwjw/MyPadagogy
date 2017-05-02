@@ -27,6 +27,11 @@ public class AppItemService implements IAppItemService {
 	}
 	
 	@Override
+	public List<AppitemCustom> queryPending() {
+		return appItemMapper.queryPending();
+	}
+	
+	@Override
 	public int deleteByPrimaryKey(Integer appId) {
 		return appItemMapper.deleteByPrimaryKey(appId);
 	}

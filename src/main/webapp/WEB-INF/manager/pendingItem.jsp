@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 格式化 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -15,7 +14,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>APP列表</title>
+<title>待审文章</title>
 <!-- BOOTSTRAP STYLES-->
 <link href="assets/css/bootstrap.css" rel="stylesheet" />
 <!-- FONTAWESOME STYLES-->
@@ -37,94 +36,90 @@
 			<div id="page-inner">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 class="page-head-line">全部文章</h1>
+						<h1 class="page-head-line">待审核文章</h1>
 					</div>
 				</div>
 				<!-- /. ROW  -->
-
-
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-						<form action="#" method="post" id="appListForm">
-							<input type="hidden" name="p" value="pending" />
-							<table class="table table-striped table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>
-											<div class="checkbox">
-												<label> <input type="checkbox" id="allsel">ID
-												</label>
-											</div>
-										</th>
-										<th>APP 名</th>
-										<th>类别</th>
-										<!-- <th>下载方式</th> -->
-										<th>创建者</th>
-										<th>创建时间</th>
-										<th>状态</th>
-										<th>浏览量</th>
-										<th>评价(赞/踩)</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${appList}" var="appItem">
+							<form action="#" method="post" id="appListForm">
+								<input type="hidden" name="p" value="pending" />
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
 										<tr>
-											<td>
+											<th>
 												<div class="checkbox">
-													<label> 
-													<input type="checkbox" name="appinfo" value="${appItem.appId }">${appItem.appId }
+													<label> <input type="checkbox" id="allsel">ID
 													</label>
 												</div>
-											</td>
-											<td><a href="#">${appItem.name }</a></td>
-											<td><c:forEach items="${appItem.typeName}" var="next">  ${next}  | </c:forEach></td>
-											<%-- <td>${appItem.downLink}</td> --%>
-											<td>${appItem.userName}</td>
-											<td><fmt:formatDate value='${appItem.createtime}'
-													pattern='yyyy-MM-dd HH:mm:ss' /></td>
-											<td>${appItem.stateStr}</td>
-											<td>${appItem.count}</td>
-											<td>${appItem.support} / ${appItem.dislike}</td>
-											<td class="text-center">
-												<a class="btn btn-primary" href="">修改</a>
-												<a class="btn btn-danger" href="appItem/changeStateById/${appItem.appId }?p=appList">不通过</a>
-												<a class="btn btn-danger" href="appItem/del/${appItem.appId }?p=appList">删除</a>
-											</td>
+											</th>
+											<th>APP 名</th>
+											<th>类别</th>
+											<!-- <th>下载方式</th> -->
+											<th>创建者</th>
+											<th>创建时间</th>
+											<th>状态</th>
+											<!-- <th>浏览量</th>
+                                        <th>评价(赞/踩)</th> -->
+											<th>操作</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</form>
+									</thead>
+									<tbody>
+										<c:forEach items="${appList}" var="appItem">
+											<tr>
+												<td>
+													<div class="checkbox">
+														<label> <input type="checkbox" name="appinfo"
+															value="${appItem.appId }">${appItem.appId }
+														</label>
+													</div>
+												</td>
+												<td><a href="#">${appItem.name }</a></td>
+												<td><c:forEach items="${appItem.typeName}" var="next">  ${next}  | </c:forEach></td>
+												<%-- <td>${appItem.downLink}</td> --%>
+												<td>${appItem.userName}</td>
+												<td><fmt:formatDate value='${appItem.createtime}'
+														pattern='yyyy-MM-dd HH:mm:ss' /></td>
+												<td>${appItem.stateStr}</td>
+												<%-- <td>${appItem.count}</td>
+												<td>${appItem.support}/ ${appItem.dislike}</td> --%>
+												<td class="text-center"><a class="btn btn-primary"
+													href="">修改</a> <a class="btn btn-danger"
+													href="appItem/changeStateById/${appItem.appId }?p=pending">通过</a> <a
+													class="btn btn-danger" href="appItem/del/${appItem.appId }?p=pending">删除</a>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</form>
 						</div>
 
 						<ul class="pagination">
 							<li
 								<c:if test="${page.pageNum eq page.firstPage}"> class='disabled' </c:if>>
-								<a href="appItem/queryAll?pageNum=${page.firstPage } " alt="首页">&laquo;</a>
+								<a href="appItem/queryPending?pageNum=${page.firstPage } " alt="首页">&laquo;</a>
 							</li>
 							<c:forEach items="${page.navigatepageNums }" var="i">
 								<li <c:if test="${page.pageNum eq i}"> class="active" </c:if>>
-									<a href="appItem/queryAll?pageNum=${i} ">${i} <span class="sr-only">(current)</span></a>
+									<a href="appItem/queryPending?pageNum=${i} ">${i} <span
+										class="sr-only">(current)</span></a>
 								</li>
 							</c:forEach>
 							<li
 								<c:if test="${page.pageNum eq page.lastPage}"> class='disabled' </c:if>><a
-								href="appItem/queryAll?pageNum=${page.lastPage} " alt="最后一页">&raquo;</a></li>
+								href="appItem/queryPending?pageNum=${page.lastPage} " alt="最后一页">&raquo;</a></li>
 						</ul>
 
 						<div class="form-group form-inline">
-							<label>多选操作</label> 
-							<select class="form-control" id="selectList">
+							<label>多选操作</label> <select class="form-control" id="selectList">
 								<option value="del">删除</option>
-								<option value="no">不通过</option>
+								<option value="no">通过</option>
 							</select>
 							<button class="btn btn-primary form-control" id="init_btn">确定</button>
 						</div>
 					</div>
-
-
 				</div>
 				<!-- /. ROW  -->
 			</div>
@@ -132,6 +127,7 @@
 		</div>
 		<!-- /. PAGE WRAPPER  -->
 	</div>
+	<!-- /. WRAPPER  -->
 	<!-- /. WRAPPER  -->
 	<jsp:include page="footer.jsp" />
 	<!-- /. FOOTER  -->
@@ -146,7 +142,7 @@
 	<!-- CUSTOM SCRIPTS -->
 	<script src="assets/js/custom.js"></script>
 	
-	<script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function(){
        	  //实现全选功能
        	   $("#allsel").click(function(e) {
@@ -165,16 +161,16 @@
        	   		}else{
        	   			var str  = $("#selectList").val();
        	   			if(str == "del"){
-       	   				$('form[id=appListForm]').attr('action','appItem/selectDel?p=appList');
+       	   				$('form[id=appListForm]').attr('action','appItem/selectDel?p=pending');
        	   				$('form[id=appListForm]').submit();
        	   			}else if(str == "no"){
-       	   				$('form[id=appListForm]').attr('action','appItem/changeState?p=appList');
+       	   				$('form[id=appListForm]').attr('action','appItem/changeState?p=pending');
        	   				$('form[id=appListForm]').submit();
        	   			}
        	   		}
        	   });
         } );
 		
-    </script>	
+</script>
 </body>
 </html>
