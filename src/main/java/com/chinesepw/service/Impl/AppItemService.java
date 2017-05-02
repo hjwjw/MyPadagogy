@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.chinesepw.mapper.AppitemMapper;
 import com.chinesepw.po.Appitem;
+import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.service.IAppItemService;
 
 /**
@@ -21,7 +22,7 @@ public class AppItemService implements IAppItemService {
 	AppitemMapper appItemMapper;
 	
 	@Override
-	public List<Appitem> queryAll() {
+	public List<AppitemCustom> queryAll() {
 		return appItemMapper.queryAll();
 	}
 	

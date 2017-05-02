@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.chinesepw.mapper.AppitemMapper" >
-  <resultMap id="BaseResultMap" type="com.chinesepw.po.Appitem" >
+  <resultMap id="BaseResultMap" type="com.chinesepw.po.AppitemCustom" >
     <id column="APP_ID" property="appId" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -11,10 +11,11 @@
     <result column="COUNT" property="count" jdbcType="INTEGER" />
     <result column="SUPPORT" property="support" jdbcType="INTEGER" />
     <result column="DISLIKE" property="dislike" jdbcType="INTEGER" />
+    
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.chinesepw.po.Appitem" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.chinesepw.po.AppitemCustom" extends="BaseResultMap" >
     <result column="INTRODUCE" property="introduce" jdbcType="LONGVARCHAR" />
-  </resultMap>
+  </resultMap> 
   <sql id="Base_Column_List" >
     APP_ID, USER_ID, NAME, DOWN_LINK, CREATETIME, STATE, COUNT, SUPPORT, DISLIKE
   </sql>
@@ -24,7 +25,10 @@
   <select id="queryAll" resultMap="ResultMapWithBLOBs" >
   	select 
   	<include refid="Base_Column_List" />
+  	,
+  	<include refid="Blob_Column_List" />
   	from appitem
+  	where STATE = 1
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 

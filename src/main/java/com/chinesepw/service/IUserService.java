@@ -1,0 +1,21 @@
+package com.chinesepw.service;
+
+import com.chinesepw.po.User;
+
+/**
+ * @author HJW
+ * @date 2017年5月1日
+ * 
+ */
+public interface IUserService {
+	
+    public int deleteByPrimaryKey(Integer userId);
+
+    public int insertSelective(User record);
+
+    public User selectByPrimaryKey(Integer userId);
+
+    public int updateByPrimaryKeySelective(User record);
+
+    public int updateByPrimaryKey(User record);
+}

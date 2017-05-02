@@ -3,6 +3,7 @@ package com.chinesepw.service;
 import java.util.List;
 
 import com.chinesepw.po.Appitem;
+import com.chinesepw.po.AppitemCustom;
 
 /**
  * @author HJW
@@ -10,7 +11,7 @@ import com.chinesepw.po.Appitem;
  * 
  */
 public interface IAppItemService {
-	public List<Appitem> queryAll();
+	public List<AppitemCustom> queryAll();
 	
 	public int deleteByPrimaryKey(Integer appId);
 

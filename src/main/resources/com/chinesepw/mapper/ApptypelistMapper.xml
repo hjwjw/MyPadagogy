@@ -9,12 +9,32 @@
   <sql id="Base_Column_List" >
     ID, APP_ID, TYPE_ID
   </sql>
+  <select id="getTypeListByAppId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select 
+  	TYPE_ID
+  	from apptypelist
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </select>
+  <select id="getAppListByTypeId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select 
+  	APP_ID
+  	from apptypelist
+    where TYPE_ID = #{typeId,jdbcType=INTEGER}  
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from apptypelist
     where ID = #{id,jdbcType=INTEGER}
   </select>
+   <delete id="deleteByappId" parameterType="java.lang.Integer" >
+    delete from apptypelist
+    where  APP_ID = #{appId,jdbcType=INTEGER}
+  </delete>
+   <delete id="deleteBytypeId" parameterType="java.lang.Integer" >
+    delete from apptypelist
+    where TYPE_ID = #{typeId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from apptypelist
     where ID = #{id,jdbcType=INTEGER}

@@ -4,20 +4,19 @@
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">移动端导航</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">COMPANY NAME</a>
+                <a class="navbar-brand" href="index.html">Padagogy </a>
             </div>
 
             <div class="header-right">
 
-              <a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
-                <a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
-                <a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
-
+                <a href="index.html" class="btn btn-info" title="首页"><i class="fa fa-home fa-2x"></i></a>
+                <a href="message-task.html" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
+                <a href="login.html" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
 
             </div>
         </nav>
@@ -46,13 +45,13 @@
                         <a href="#"><i class="fa fa-desktop "></i>app管理 <span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                             <li>
-                                <a href="panel-tabs.html"><i class="fa fa-list-alt"></i>全部文章</a>
+                                <a href="appItem/queryAll"><i class="fa fa-list-alt"></i>全部文章</a>
                             </li>
                             <li>
                                 <a href="notification.html"><i class="fa fa-check-square"></i>待审核文章</a>
                             </li>
                              <li>
-                                <a href="progress.html"><i class="fa fa-edit "></i>添加新文章</a>
+                                <a href="appItem/toAdd"><i class="fa fa-edit "></i>添加新文章</a>
                             </li>
                              
                         </ul>

@@ -105,7 +105,7 @@ public class AdminController {
 				 iAdminService.deleteByPrimaryKey(Integer.parseInt(ad_id));			
 			}
 		}
-			return "redirect: queryAll";
+		return "redirect: queryAll";
 
 		
 	}

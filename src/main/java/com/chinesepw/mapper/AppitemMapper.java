@@ -3,9 +3,10 @@ package com.chinesepw.mapper;
 import java.util.List;
 
 import com.chinesepw.po.Appitem;
+import com.chinesepw.po.AppitemCustom;
 
 public interface AppitemMapper {
-	List<Appitem> queryAll();
+	List<AppitemCustom> queryAll();
 	
     int deleteByPrimaryKey(Integer appId);
 
