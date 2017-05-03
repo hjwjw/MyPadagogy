@@ -57,18 +57,7 @@
                         </ul>
                     </li>
                      <li>
-                        <a href="#"><i class="fa fa-list "></i>类别管理 <span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="type/to"><i class="fa fa-code-fork"></i>所有类别</a>
-                            </li>
-                            <li>
-                                <a href="pricing.html"><i class="fa fa-plus-square "></i>新增类别</a>
-                            </li>
-                             <li>
-                                <a href="component.html"><i class="fa fa-times "></i>删除类别</a>
-                            </li>                      
-                        </ul>
+                        <a href="type/to"><i class="fa fa-list "></i>分类管理 </a>
                     </li>
                     <li>
                         <a href="table.html"><i class="fa fa-tag "></i>标签管理 <span class="fa arrow"></span></a>

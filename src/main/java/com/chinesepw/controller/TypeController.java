@@ -156,7 +156,7 @@ public class TypeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "updateById", method = RequestMethod.POST)
-	public int updateByPrimaryKey(Apptype record) {
-		return iTypeService.updateByPrimaryKey(record);
+	public int updateByPrimaryKeySelective(Apptype record) {
+		return iTypeService.updateByPrimaryKeySelective(record);
 	}
 }
