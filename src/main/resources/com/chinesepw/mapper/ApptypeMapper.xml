@@ -1,76 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chinesepw.mapper.ApptypeMapper" >
-  <resultMap id="BaseResultMap" type="com.chinesepw.po.Apptype" >
-    <id column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    TYPE_ID, NAME, PARENT_ID
-  </sql>
-  <select id="query" resultMap="BaseResultMap" >
-    select 
-    <include refid="Base_Column_List" />
-    from apptype
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from apptype
-    where TYPE_ID = #{typeId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from apptype
-    where TYPE_ID = #{typeId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chinesepw.po.Apptype" >
-    insert into apptype (TYPE_ID, NAME, PARENT_ID
-      )
-    values (#{typeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.chinesepw.po.Apptype" >
-    insert into apptype
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="typeId != null" >
-        TYPE_ID,
-      </if>
-      <if test="name != null" >
-        NAME,
-      </if>
-      <if test="parentId != null" >
-        PARENT_ID,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="typeId != null" >
-        #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chinesepw.po.Apptype" >
-    update apptype
-    <set >
-      <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        PARENT_ID = #{parentId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where TYPE_ID = #{typeId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Apptype" >
-    update apptype
-    set NAME = #{name,jdbcType=VARCHAR},
-      PARENT_ID = #{parentId,jdbcType=VARCHAR}
-    where TYPE_ID = #{typeId,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.chinesepw.mapper.ApptypeMapper">
+	<resultMap id="BaseResultMap" type="com.chinesepw.po.Apptype">
+		<id column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		TYPE_ID, NAME, PARENT_ID
+	</sql>
+	<select id="query" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from apptype
+	</select>
+	<select id="queryTypeLev" resultType="com.chinesepw.po.TypeLev" parameterType="java.lang.Integer">
+		SELECT t1.TYPE_ID,t1.NAME AS lev1, t2.NAME as lev2, t3.NAME as lev3, t4.NAME as lev4
+		FROM apptype AS t1
+		LEFT JOIN apptype AS t2 ON t2.PARENT_ID = t1.TYPE_ID
+		LEFT JOIN apptype AS t3 ON t3.PARENT_ID = t2.TYPE_ID
+		LEFT JOIN apptype AS t4 ON t4.PARENT_ID = t3.TYPE_ID
+		WHERE t1.TYPE_ID = #{typeId,jdbcType=INTEGER};
+	</select>
+	<select id="selectByParentId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from apptype
+		where PARENT_ID = #{parentId,jdbcType=INTEGER}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from apptype
+		where TYPE_ID = #{typeId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from apptype
+		where TYPE_ID = #{typeId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinesepw.po.Apptype">
+		insert into apptype (TYPE_ID, NAME, PARENT_ID
+		)
+		values (#{typeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{parentId,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinesepw.po.Apptype">
+		insert into apptype
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				TYPE_ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="parentId != null">
+				PARENT_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				#{typeId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinesepw.po.Apptype">
+		update apptype
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where TYPE_ID = #{typeId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Apptype">
+		update apptype
+		set NAME = #{name,jdbcType=VARCHAR},
+		PARENT_ID = #{parentId,jdbcType=INTEGER}
+		where TYPE_ID = #{typeId,jdbcType=INTEGER}
+	</update>
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.chinesepw.mapper.ApptypeMapper;
 import com.chinesepw.po.Apptype;
+import com.chinesepw.po.TypeLev;
 import com.chinesepw.service.ITypeService;
 
 /**
@@ -23,6 +24,16 @@ public class TypeService implements ITypeService {
 	@Override	
 	public List<Apptype> query(){
 		return appTypeMapper.query();
+	}
+	
+	@Override
+	public List<TypeLev> queryTypeLev(Integer typeId){
+		return appTypeMapper.queryTypeLev(typeId);
+	}
+	
+	@Override
+	public List<Apptype> selectByParentId(Integer parentId){
+		return appTypeMapper.selectByParentId(parentId);
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.chinesepw.service;
 import java.util.List;
 
 import com.chinesepw.po.Apptype;
+import com.chinesepw.po.TypeLev;
 
 /**
  * @author HJW
@@ -12,6 +13,10 @@ import com.chinesepw.po.Apptype;
 public interface ITypeService {
 	
 	public List<Apptype> query();
+	
+	public List<TypeLev> queryTypeLev(Integer typeId);
+	
+	public List<Apptype> selectByParentId(Integer parentId);
 	
 	public int deleteByPrimaryKey(Integer typeId);
 

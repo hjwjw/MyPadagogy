@@ -3,7 +3,7 @@ package com.chinesepw.util;
 /**
  * @author HJW
  * @date 2017年4月21日
- * API调用出错时，显示错误信息
+ * API调用时，显示信息
  */
 public class Result<T> {
 	private String result;

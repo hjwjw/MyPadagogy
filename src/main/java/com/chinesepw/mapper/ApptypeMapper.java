@@ -3,10 +3,15 @@ package com.chinesepw.mapper;
 import java.util.List;
 
 import com.chinesepw.po.Apptype;
+import com.chinesepw.po.TypeLev;
 
 public interface ApptypeMapper {
 	
 	List<Apptype> query();
+	
+	List<TypeLev> queryTypeLev(Integer typeId);
+	
+	List<Apptype> selectByParentId(Integer parentId);
 	
     int deleteByPrimaryKey(Integer typeId);
 

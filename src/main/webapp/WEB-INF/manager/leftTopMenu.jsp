@@ -46,7 +46,7 @@
                          <ul class="nav nav-second-level">
                             <li>
                                 <a href="appItem/queryAll"><i class="fa fa-list-alt"></i>全部文章</a>
-                            </li>
+                            </li> 
                             <li>
                                 <a href="appItem/queryPending"><i class="fa fa-check-square"></i>待审核文章</a>
                             </li>
@@ -60,7 +60,7 @@
                         <a href="#"><i class="fa fa-list "></i>类别管理 <span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                             <li>
-                                <a href="invoice.html"><i class="fa fa-code-fork"></i>所有类别</a>
+                                <a href="type/to"><i class="fa fa-code-fork"></i>所有类别</a>
                             </li>
                             <li>
                                 <a href="pricing.html"><i class="fa fa-plus-square "></i>新增类别</a>
