@@ -19,8 +19,10 @@ import com.chinesepw.po.Appitem;
 import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
+import com.chinesepw.service.IKeywordService;
 import com.chinesepw.service.ITypeService;
 import com.chinesepw.service.IUserService;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -39,11 +41,21 @@ public class AppItemController {
 	@Autowired
 	ITypeService iTypeService;
 	@Autowired
+	IKeywordService iKeywordService;
+	@Autowired
 	IApptypelistService iApptypelistService;
 	@Autowired
 	IUserService iUserService;
 	
-	
+	/**
+	 * 查询所有APP列表
+	 * @param model
+	 * @param pageNum
+	 * @param pageSize
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	public String queryAll(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
@@ -64,6 +76,15 @@ public class AppItemController {
 		return "/WEB-INF/manager/appList";
 	}
 	
+	/**
+	 * 查询未通过审核的APP
+	 * @param model
+	 * @param pageNum
+	 * @param pageSize
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/queryPending",method =RequestMethod.GET)
 	public String queryPending(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
@@ -80,6 +101,13 @@ public class AppItemController {
 		return "/WEB-INF/manager/pendingItem";
 	}
 	
+	/**
+	 * 删除指定APP ，关联删除apptypelist关系
+	 * @param appId
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/del/{id}",method=RequestMethod.GET)
 	public String deleteByPrimaryKey(@PathVariable("id") Integer appId,HttpServletRequest req, HttpServletResponse resp) {
 		/*关联删除*/
@@ -92,6 +120,12 @@ public class AppItemController {
 		}
 	}
 	
+	/**
+	 * 多选删除操作 关联删除apptypelist关系
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/selectDel",method=RequestMethod.POST)
 	public String selectDeleteByPrimaryKey(HttpServletRequest req, HttpServletResponse resp) {
 		String[] appinfos = req.getParameterValues("appinfo");
@@ -108,22 +142,45 @@ public class AppItemController {
 		}
 	}
 
+	/**
+	 * 中转到APP添加页面,带入类别与标签
+	 * @return
+	 */
 	@RequestMapping(value="/toAdd",method=RequestMethod.GET)
-	public String toAdd() {
+	public String toAdd(Model model) {
+		model.addAttribute("typeList", iTypeService.query());
+		model.addAttribute("keywordList", iKeywordService.queryAll());
 		return "/WEB-INF/manager/addApp";
 	}
 	
+	/**
+	 * 新增APP
+	 * @param record
+	 * @return
+	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String insertSelective(Appitem record) {
 		iAppItemService.insertSelective(record);
 		return "redirect: queryAll";
 	}
-	@ResponseBody
+	
+	
+	/**
+	 * 返回指定APP对象
+	 * @param appId
+	 * @return
+	 */
 	@RequestMapping(value="select/{id}",method=RequestMethod.GET)
 	public Appitem selectByPrimaryKey(@PathVariable("id") Integer appId) {
 		return iAppItemService.selectByPrimaryKey(appId);
 	}
 
+	/**
+	 * 更新前获取需要更新的APP内容
+	 * @param model
+	 * @param appId
+	 * @return
+	 */
 	@RequestMapping(value="up/{id}",method=RequestMethod.GET)
 	public String updateBefore(Model model, @PathVariable("id") Integer appId) {
 		Appitem appitem = iAppItemService.selectByPrimaryKey(appId);
@@ -131,12 +188,23 @@ public class AppItemController {
 		return "/WEB-INF/manager/addApp";
 	}
 	
+	/**
+	 * 更新
+	 * @param record
+	 * @return
+	 */
 	@RequestMapping(value="update/{id}",method=RequestMethod.POST)
 	public String updateByPrimaryKeyWithBLOBs(Appitem record) {
 		iAppItemService.updateByPrimaryKeyWithBLOBs(record);
 		return "redirect: ../queryAll";
 	}
 	
+	/**
+	 * 批量修改审核状态 
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/changeState",method=RequestMethod.POST)
 	public String changeState(HttpServletRequest req, HttpServletResponse resp) {
 		String[] appinfos = req.getParameterValues("appinfo");
@@ -159,6 +227,13 @@ public class AppItemController {
 		}
 	}
 
+	/**
+	 * 修改单个APP的审核状态
+	 * @param appId
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/changeStateById/{id}",method=RequestMethod.GET)
 	public String changeStateById(@PathVariable("id") Integer appId,HttpServletRequest req, HttpServletResponse resp) {
 		if (appId !=null) {

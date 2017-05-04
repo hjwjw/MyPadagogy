@@ -61,62 +61,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  <!-- /. ROW  -->
                   <div class="row">
                     <div class="col-md-12">
-                       <form action="#" method="post" role="form" class="form-horizontal">
+                       <form action="appItem/add" method="post" role="form" class="form-horizontal">
                            <div class="form-group">
                               <label for="name" class="col-md-1 control-label">名称</label>
                               <div class="col-md-3">
                                  <input type="text" class="form-control" id="name" 
-                                    placeholder="请输入名称">
+                                    placeholder="请输入名称" name="name">
                               </div>
                            </div>
                            <div class="form-group">
                               <label for="typeName" class="col-md-1 control-label">类别</label>
                               <div class="col-md-3">
-                                  <select class="form-control" id="typeName">
-                                      <option>1</option>
-                                      <option>2</option>
-                                  </select>
+                                <select class="form-control" id="typeSelect" ></select> 
+                                  
                               </div>
                            </div>
                            <div class="form-group">
                               <label for="typeName" class="col-md-1 control-label">标签</label>
                               <div style="height: 150px" class="col-md-9 pre-scrollable">
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
-                                  <input type="checkbox" name="" />1
-                                  <input type="checkbox" name="" />2
-                                  <input type="checkbox" name="" />3
+                                  <c:forEach items="${keywordList}" var="keyword">
+                                  	<input type="checkbox" name="${keyword.keyId }" value="${keyword.keyId }" />${keyword.name }
+                                  </c:forEach>
                               </div>
                            </div>
                            <div class="form-group">
                               <label for="downLink" class="col-md-1 control-label">下载链接</label>
                               <div class="col-md-5">
-                                 <input type="text" class="form-control" id="downLink" 
+                                 <input type="text" class="form-control" id="downLink" name="downLink"
                                     placeholder="请输入链接">
                               </div>
                            </div>
@@ -145,12 +116,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                            <div class="form-group">
                               <label for="introduce" class="col-md-1 control-label">介绍</label>
                               <div class="col-md-10">
-                                 <div id="summernote"></div>
+                                 <div id="summernote">你好</div>
                                  <script>
                                   $(document).ready(function() {
+                                	  
                                       $('#summernote').summernote({
-                                          height: 300,                 // set editor height
+                                          height: '300',
+                                          lang:'zh-CN'                 // set editor height
                                         });
+                                      
+                                      var str =$('summernote').code();;
+                                	  console.info('编辑器中的内容');
+                                	  console.info(str);
                                   });
                                 </script>
                               </div>
@@ -176,6 +153,68 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 </body>
+<script type="text/javascript"> 
+
+	var data =new Array();
+  /* EL表达式与JS相结合 */
+  <c:set var="index" value="0" /> 
+  <c:forEach items="${typeList}" var="type" >
+	//js中可以使用此标签，将EL表达式中的值push到数组中  
+	data['${index}'] = {id:'${type.typeId}',pid:'${type.parentId}',text:'${type.name}'}; 
+	<c:set var="index" value="${index+1}" />
+  </c:forEach>
+	
+	function TreeSelector(item,data,rootId){ 
+	this._data = data; 
+	this._item = item; 
+	this._rootId = rootId; 
+	} 
+	TreeSelector.prototype.createTree = function(){ 
+	var len =this._data.length; 
+	for( var i= 0;i<len;i++){ 
+	if ( this._data[i].pid == this._rootId){ 
+	this._item.options.add(new Option(".."+this._data[i].text,this._data[i].id)); 
+	for(var j=0;j<len;j++){ 
+	this.createSubOption(len,this._data[i],this._data[j]); 
+	} 
+	} 
+	} 
+	} 
+	TreeSelector.prototype.createSubOption = function(len,current,next){ 
+	var blank = ".."; 
+	if ( next.pid == current.id){ 
+	intLevel =0; 
+	var intlvl =this.getLevel(this._data,this._rootId,current); 
+	for(a=0;a<intlvl;a++) 
+	blank += ".."; 
+	blank += "├-"; 
+	this._item.options.add(new Option(blank + next.text,next.id)); 
+	for(var j=0;j<len;j++){ 
+	this.createSubOption(len,next,this._data[j]); 
+	} 
+	} 
+	} 
+	TreeSelector.prototype.getLevel = function(datasources,topId,currentitem){ 
+	var pid =currentitem.pid; 
+	if( pid !=topId) 
+	{ 
+	for(var i =0 ;i<datasources.length;i++) 
+	{ 
+	if( datasources[i].id == pid) 
+	{ 
+	intLevel ++; 
+	this.getLevel(datasources,topId,datasources[i]); 
+	} 
+	} 
+	} 
+	return intLevel; 
+	} 
+	
+	var ts = new TreeSelector(document.getElementById("typeSelect"),data,0); 
+	ts.createTree(); 
+	
+</script> 
+
 <script type="text/javascript">
   $("#input-dim-2").fileinput({
       uploadUrl: "/file-upload-batch/2",
