@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.chinesepw.po.Admin;
+import com.chinesepw.po.AdminUser;
 import com.chinesepw.po.Keyword;
+import com.chinesepw.service.IKeywordListService;
 import com.chinesepw.service.IKeywordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -32,8 +33,8 @@ public class KeywordController {
 	@Autowired
 	IKeywordService iKeywordService;
 	@Autowired
-	KeywordListController keywordListController;
-	
+	IKeywordListService iKeywordListService;
+
 	/**
 	 * 查询标签列表
 	 * @param model
@@ -51,7 +52,7 @@ public class KeywordController {
 		keywordList = iKeywordService.queryAll();
 		PageInfo<Keyword> pageInfo = new PageInfo<Keyword>(keywordList);
 		for (Keyword keyword : keywordList) {
-			keyword.setAppCount(keywordListController.appCount(keyword.getKeyId()));
+			keyword.setAppCount(iKeywordListService.selectAppItemByKeyId(keyword.getKeyId()).size());
 		}
 		model.addAttribute("keywordList", keywordList);
 		model.addAttribute("page",pageInfo);

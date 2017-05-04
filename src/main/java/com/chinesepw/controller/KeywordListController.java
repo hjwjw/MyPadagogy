@@ -101,9 +101,4 @@ public class KeywordListController {
 		return iKeywordListService.updateByPrimaryKeySelective(record);
 	}
 	
-	public int appCount(Integer keyId) {
-		int count = 0 ;
-		count = iKeywordListService.selectAppItemByKeyId(keyId).size();
-		return count;
-	}
 }

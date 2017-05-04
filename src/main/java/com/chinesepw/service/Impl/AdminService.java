@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chinesepw.mapper.AdminMapper;
-import com.chinesepw.po.Admin;
+import com.chinesepw.mapper.AdminUserMapper;
+import com.chinesepw.po.AdminUser;
 import com.chinesepw.service.IAdminService;
 
 @Service
 public class AdminService implements IAdminService {
 	
 	@Autowired
-	private AdminMapper adminMapper; 
+	private AdminUserMapper adminMapper; 
 	
 	@Override
 	public int deleteByPrimaryKey(Integer id) {
@@ -21,32 +21,32 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
-	public int insert(Admin record) {
+	public int insert(AdminUser record) {
 		return adminMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(Admin record) {
+	public int insertSelective(AdminUser record) {
 		return adminMapper.insertSelective(record);
 	}
 
 	@Override
-	public Admin selectByPrimaryKey(Integer id) {
+	public AdminUser selectByPrimaryKey(Integer id) {
 		return adminMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(Admin record) {
+	public int updateByPrimaryKeySelective(AdminUser record) {
 		return adminMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public int updateByPrimaryKey(Admin record) {
+	public int updateByPrimaryKey(AdminUser record) {
 		return adminMapper.updateByPrimaryKey(record);
 	}
 
 	@Override
-	public List<Admin> queryAll() {
+	public List<AdminUser> queryAll() {
 		return adminMapper.queryAll();
 	}
 

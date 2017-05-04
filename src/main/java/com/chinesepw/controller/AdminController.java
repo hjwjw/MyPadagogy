@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chinesepw.po.Admin;
+import com.chinesepw.po.AdminUser;
 import com.chinesepw.service.IAdminService;
 import com.chinesepw.util.Result;
 import com.github.pagehelper.PageHelper;
@@ -51,8 +51,8 @@ public class AdminController {
 	public String query(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "4") int pageSize, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PageHelper.startPage(pageNum, pageSize);
-		List<Admin> adminList  = iAdminService.queryAll();
-		PageInfo<Admin> pageInfo = new PageInfo<Admin>(adminList);
+		List<AdminUser> adminList  = iAdminService.queryAll();
+		PageInfo<AdminUser> pageInfo = new PageInfo<AdminUser>(adminList);
 		model.addAttribute("adminList",adminList);
 		model.addAttribute("page",pageInfo);
 		return "/WEB-INF/manager/managers"; 
@@ -73,7 +73,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = { RequestMethod.POST })
-	public String insertSelective(Admin record, HttpServletRequest req, HttpServletResponse resp) {
+	public String insertSelective(AdminUser record, HttpServletRequest req, HttpServletResponse resp) {
 		iAdminService.insertSelective(record);
 		return "redirect: queryAll";
 	}
@@ -117,7 +117,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value="up/{id}",method=RequestMethod.GET)
 	public String selectByPrimaryKey(Model model,  @PathVariable("id") Integer id,HttpServletRequest req, HttpServletResponse resp) {
-		Admin admin = iAdminService.selectByPrimaryKey(id);
+		AdminUser admin = iAdminService.selectByPrimaryKey(id);
 		model.addAttribute("admin", admin);
 		return "/WEB-INF/manager/add_Manager"; 
 	}
@@ -130,7 +130,7 @@ public class AdminController {
 	 */
 	
 	@RequestMapping(value="update/{id}",method=RequestMethod.POST)
-	public String updateByPrimaryKey(Admin record, HttpServletRequest req, HttpServletResponse resp) {
+	public String updateByPrimaryKey(AdminUser record, HttpServletRequest req, HttpServletResponse resp) {
 		iAdminService.updateByPrimaryKey(record);
 		return "redirect: ../queryAll";
 		

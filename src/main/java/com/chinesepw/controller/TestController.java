@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chinesepw.po.Admin;
+import com.chinesepw.po.AdminUser;
 
 /**
  * @author HJW
@@ -34,13 +34,13 @@ public class TestController {
 	@RequestMapping(value="test2", method = RequestMethod.GET)
 	public String test(Model model,HttpServletRequest req,HttpServletResponse resp)  {
 		System.out.println("Test2 success!");
-		Admin a1 = new Admin();
-		Admin a2 = new Admin();
+		AdminUser a1 = new AdminUser();
+		AdminUser a2 = new AdminUser();
 		a1.setName("hjwww");
 		a1.setPwd("123");
 		a2.setName("www");
 		a2.setPwd("rew");
-		ArrayList<Admin> a = new ArrayList<Admin>();
+		ArrayList<AdminUser> a = new ArrayList<AdminUser>();
 		a.add(a1);
 		a.add(a2);
 		model.addAttribute("adminList", a);

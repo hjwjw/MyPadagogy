@@ -2,20 +2,20 @@ package com.chinesepw.service;
 
 import java.util.List;
 
-import com.chinesepw.po.Admin;
+import com.chinesepw.po.AdminUser;
 
 public interface IAdminService {
-	public List<Admin> queryAll();
+	public List<AdminUser> queryAll();
 	
     public int deleteByPrimaryKey(Integer id);
 
-    public int insert(Admin record);
+    public int insert(AdminUser record);
     /*选择性插入*/
-    public int insertSelective(Admin record);
+    public int insertSelective(AdminUser record);
 
-    Admin selectByPrimaryKey(Integer id);
+    AdminUser selectByPrimaryKey(Integer id);
     //	选择性更新
-    public int updateByPrimaryKeySelective(Admin record);
+    public int updateByPrimaryKeySelective(AdminUser record);
 
-    public int updateByPrimaryKey(Admin record);
+    public int updateByPrimaryKey(AdminUser record);
 }
