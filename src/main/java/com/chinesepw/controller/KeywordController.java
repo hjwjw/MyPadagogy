@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.chinesepw.po.Admin;
 import com.chinesepw.po.Keyword;
 import com.chinesepw.service.IKeywordService;
 import com.github.pagehelper.PageHelper;
@@ -29,33 +31,114 @@ public class KeywordController {
 	
 	@Autowired
 	IKeywordService iKeywordService;
+	@Autowired
+	KeywordListController keywordListController;
 	
-	@RequestMapping(value="/query",method=RequestMethod.GET)
-	public PageInfo<Keyword> queryAll(@RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+	/**
+	 * 查询标签列表
+	 * @param model
+	 * @param pageNum
+	 * @param pageSize
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
+	public String queryAll(Model model, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "4") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
 		List<Keyword> keywordList = new ArrayList<Keyword>();
 		PageHelper.startPage(pageNum, pageSize);
 		keywordList = iKeywordService.queryAll();
-		return new PageInfo<Keyword>(keywordList);
+		PageInfo<Keyword> pageInfo = new PageInfo<Keyword>(keywordList);
+		for (Keyword keyword : keywordList) {
+			keyword.setAppCount(keywordListController.appCount(keyword.getKeyId()));
+		}
+		model.addAttribute("keywordList", keywordList);
+		model.addAttribute("page",pageInfo);
+		return "/WEB-INF/manager/labelList";
 	}
 
+	/**
+	 * 删除指定标签
+	 * @param keyId
+	 * @return
+	 */
 	@RequestMapping(value="/del/{id}",method=RequestMethod.GET)
-	public int deleteByPrimaryKey(@PathVariable("id") Integer keyId) {
-		return iKeywordService.deleteByPrimaryKey(keyId);
+	public String deleteByPrimaryKey(@PathVariable("id") Integer keyId) {
+		iKeywordService.deleteByPrimaryKey(keyId);
+		return "redirect: ../queryAll";
+	}
+	
+
+	/**
+	 * 多选操作 删除
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@RequestMapping(value = "/selectDel", method = { RequestMethod.POST })
+	public String SelectDeleteByPrimaryKey( HttpServletRequest req, HttpServletResponse resp) {
+		 String[] keywordInfos = req.getParameterValues("keywordInfo"); 
+		for (String keyId : keywordInfos) {
+			if (keyId != null) {
+				iKeywordService.deleteByPrimaryKey(Integer.parseInt(keyId));			
+			}
+		}
+		return "redirect: queryAll";
+
+		
+	}
+	
+	/**
+	 * 跳转到管理员新增页面（web-inf下的页面不能直接访问）
+	 * @return
+	 */
+	@RequestMapping(value="/toAdd",method=RequestMethod.GET)
+	public String toAdd() {
+		return "/WEB-INF/manager/addKeyword";
+	}
+	
+	/**
+	 * 新增标签
+	 * @param record
+	 * @return
+	 */
+	@RequestMapping(value="/add",method=RequestMethod.POST)
+	public String insertSelective(Keyword record) {
+		iKeywordService.insertSelective(record);
+		return "redirect: queryAll";
 	}
 
-	@RequestMapping(value="/insert",method=RequestMethod.POST)
-	public int insertSelective(Keyword record) {
-		return iKeywordService.insertSelective(record);
-	}
-
+	/**
+	 * 返回指定标签对象
+	 * @param keyId
+	 * @return
+	 */
 	@RequestMapping(value="/select/{id}",method=RequestMethod.GET)
 	public Keyword selectByPrimaryKey(@PathVariable("id") Integer keyId) {
 		return iKeywordService.selectByPrimaryKey(keyId);
 	}
+	
+	/**
+	 * 更新前获取数据
+	 * @param model
+	 * @param id
+	 */
+	@RequestMapping(value="up/{id}",method=RequestMethod.GET)
+	public String selectByPrimaryKey(Model model,  @PathVariable("id") Integer id,HttpServletRequest req, HttpServletResponse resp) {
+		Keyword keyword = iKeywordService.selectByPrimaryKey(id);
+		model.addAttribute("keyword", keyword);
+		return "/WEB-INF/manager/addKeyword"; 
+	}
 
+	/**
+	 * 更新标签
+	 * @param record
+	 * @return
+	 */
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public int updateByPrimaryKeySelective(Keyword record) {
-		return iKeywordService.updateByPrimaryKeySelective(record);
+	public String updateByPrimaryKeySelective(Keyword record) {
+		iKeywordService.updateByPrimaryKeySelective(record);
+		return "redirect: queryAll";
 	}
 }

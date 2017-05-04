@@ -60,13 +60,13 @@
                         <a href="type/to"><i class="fa fa-list "></i>分类管理 </a>
                     </li>
                     <li>
-                        <a href="table.html"><i class="fa fa-tag "></i>标签管理 <span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-tag "></i>标签管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                  <li>
-                                    <a href="form.html"><i class="fa fa-tags "></i>全部标签 </a>
+                                    <a href="keyword/queryAll"><i class="fa fa-tags "></i>全部标签 </a>
                                 </li>
                                  <li>
-                                    <a href="form-advance.html"><i class="fa fa-plus-square"></i>新增标签</a>
+                                    <a href="keyword/toAdd"><i class="fa fa-plus-square"></i>新增标签</a>
                                 </li> 
                                                           
                             </ul>

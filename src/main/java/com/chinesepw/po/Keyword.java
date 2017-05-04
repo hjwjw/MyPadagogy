@@ -6,6 +6,8 @@ public class Keyword {
     private String name;
 
     private String description;
+    
+    private Integer appCount;
 
     public Integer getKeyId() {
         return keyId;
@@ -30,4 +32,14 @@ public class Keyword {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
+
+	public Integer getAppCount() {
+		return appCount;
+	}
+
+	public void setAppCount(Integer appCount) {
+		this.appCount = appCount;
+	}
+    
+    
 }
