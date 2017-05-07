@@ -17,6 +17,11 @@ public interface IAppItemService {
 	
 	public int deleteByPrimaryKey(Integer appId);
 
+	/**
+	 * 新增一条记录，并返回新记录的ID
+	 * @param record
+	 * @return
+	 */
     public int insertSelective(Appitem record);
 
     Appitem selectByPrimaryKey(Integer appId);

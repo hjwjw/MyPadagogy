@@ -2,12 +2,25 @@ package com.chinesepw.po;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Appitem {
+	@Id
+	@GeneratedValue(generator = "JDBC")
     private Integer appId;
 
     private Integer userId;
 
     private String name;
+    
+    private String logo;
+
+	private String img1;
+    
+    private String img2;
+    
+    private String img3;
 
     private String downLink;
 
@@ -22,6 +35,7 @@ public class Appitem {
     private Integer dislike;
 
     private String introduce;
+    
 
     public Integer getAppId() {
         return appId;
@@ -46,6 +60,38 @@ public class Appitem {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+    
+    public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getImg1() {
+		return img1;
+	}
+
+	public void setImg1(String img1) {
+		this.img1 = img1;
+	}
+
+	public String getImg2() {
+		return img2;
+	}
+
+	public void setImg2(String img2) {
+		this.img2 = img2;
+	}
+
+	public String getImg3() {
+		return img3;
+	}
+
+	public void setImg3(String img3) {
+		this.img3 = img3;
+	}
 
     public String getDownLink() {
         return downLink;

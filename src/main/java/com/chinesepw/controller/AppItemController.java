@@ -1,28 +1,44 @@
 package com.chinesepw.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.chinesepw.po.Appitem;
 import com.chinesepw.po.AppitemCustom;
+import com.chinesepw.po.Apptypelist;
+import com.chinesepw.po.Keywordlist;
+import com.chinesepw.po.User;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
+import com.chinesepw.service.IKeywordListService;
 import com.chinesepw.service.IKeywordService;
 import com.chinesepw.service.ITypeService;
 import com.chinesepw.service.IUserService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -42,6 +58,8 @@ public class AppItemController {
 	ITypeService iTypeService;
 	@Autowired
 	IKeywordService iKeywordService;
+	@Autowired
+	IKeywordListService ikeywordListService;
 	@Autowired
 	IApptypelistService iApptypelistService;
 	@Autowired
@@ -112,6 +130,7 @@ public class AppItemController {
 	public String deleteByPrimaryKey(@PathVariable("id") Integer appId,HttpServletRequest req, HttpServletResponse resp) {
 		/*关联删除*/
 		iApptypelistService.deleteByappId(appId);
+		ikeywordListService.deleteByappId(appId);
 		iAppItemService.deleteByPrimaryKey(appId);
 		if (req.getParameter("p").equals("pending")) {
 			return "redirect: ../queryPending";
@@ -132,6 +151,7 @@ public class AppItemController {
 		for (String appId : appinfos) {
 			if (appId != null) {
 				iApptypelistService.deleteByappId(Integer.parseInt(appId));
+				ikeywordListService.deleteByappId(Integer.parseInt(appId));
 				iAppItemService.deleteByPrimaryKey(Integer.parseInt(appId));			
 			}
 		}
@@ -159,8 +179,44 @@ public class AppItemController {
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String insertSelective(Appitem record) {
-		iAppItemService.insertSelective(record);
+	public String insertSelective(@RequestParam(value = "iconPic", required = false) MultipartFile file,Appitem record,HttpServletRequest req,HttpServletResponse resp)throws IOException {
+		String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
+        String fileName = file.getOriginalFilename();  
+        System.out.println(path);  
+        File targetFile = new File(path, fileName);  
+        if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+        //保存  
+        try {  
+            file.transferTo(targetFile);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        String iconPath = req.getContextPath()+"/upload/Appicon/"+fileName;
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("userId", 1);
+		Integer userId = (Integer)session.getAttribute("userId");
+		String[] keyIds = req.getParameterValues("keyId[]");
+		String typeId = req.getParameter("typeSelect");
+		Date createtime = new Date();
+		record.setUserId(userId);
+		record.setCreatetime(createtime);
+		record.setLogo(iconPath);
+		Integer appId = iAppItemService.insertSelective(record);
+		//插入类型与APP关系
+		Apptypelist apptypelist = new Apptypelist();
+		apptypelist.setAppId(appId);
+		apptypelist.setTypeId(Integer.parseInt(typeId));
+		iApptypelistService.insert(apptypelist);
+		//插入标签与APP关系 
+		Keywordlist keywordlist = new Keywordlist();
+		for (String keyId : keyIds) {
+			keywordlist.setKeyId(Integer.parseInt(keyId));
+			keywordlist.setAppId(appId);
+		}
+		
 		return "redirect: queryAll";
 	}
 	
@@ -184,8 +240,10 @@ public class AppItemController {
 	@RequestMapping(value="up/{id}",method=RequestMethod.GET)
 	public String updateBefore(Model model, @PathVariable("id") Integer appId) {
 		Appitem appitem = iAppItemService.selectByPrimaryKey(appId);
+		model.addAttribute("typeList", iTypeService.query());
+		model.addAttribute("keywordList", iKeywordService.queryAll());
 		model.addAttribute("appItem", appitem);
-		return "/WEB-INF/manager/addApp";
+		return "/WEB-INF/manager/updateApp";
 	}
 	
 	/**
@@ -284,6 +342,66 @@ public class AppItemController {
 			appitemList.add(iAppItemService.selectByPrimaryKey(appId));
 		}
 		return appitemList;
+	}
+	
+	//summernote中的图片上传
+	@RequestMapping(value="/uploadFileEdit",method = RequestMethod.POST )
+	@ResponseBody
+	public String uploadFileEdit(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request)throws IOException {
+		String path = request.getSession().getServletContext().getRealPath("upload/article");  
+        String fileName = file.getOriginalFilename();  
+        System.out.println(path);  
+        File targetFile = new File(path, fileName);  
+        if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+        //保存  
+        try {  
+            file.transferTo(targetFile);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        String filePath = request.getContextPath()+"/upload/article/"+fileName;
+		return filePath;
+	}
+	
+	/**
+	 * 焦点图上传
+	 * @param myFile
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/uploadPics")
+    @ResponseBody
+	public Map<String, Object> uploadPics(@RequestParam("focusPic") MultipartFile myFile,HttpServletRequest request,HttpServletResponse response) {
+		Map<String, Object> json = new HashMap<String, Object>();
+        try {
+            //输出文件后缀名称
+            System.out.println(myFile.getOriginalFilename());
+            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            //图片名称
+            String name = df.format(new Date());
+
+            Random r = new Random();
+            for(int i = 0 ;i<3 ;i++){
+                name += r.nextInt(10);
+            }
+            String ext = FilenameUtils.getExtension(myFile.getOriginalFilename());
+            //保存图片       File位置 （全路径）   /upload/fileName.jpg
+            String url = request.getSession().getServletContext().getRealPath("upload/focusPic");
+            //相对路径
+            String path = "/"+name + "." + ext;
+            File file = new File(url);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            myFile.transferTo(new File(url+path));
+            json.put("success", "/upload/focusPic"+path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json ;
 	}
 
 }

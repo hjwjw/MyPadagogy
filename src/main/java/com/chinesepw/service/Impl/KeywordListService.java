@@ -50,4 +50,14 @@ public class KeywordListService implements IKeywordListService {
 		return keywordListMapper.updateByPrimaryKeySelective(record);
 	}
 
+	@Override
+	public int deleteByappId(Integer appId) {
+		return keywordListMapper.deleteByappId(appId);
+	}
+
+	@Override
+	public int deleteBykeyId(Integer keyId) {
+		return keywordListMapper.deleteBykeyId(keyId);
+	}
+
 }

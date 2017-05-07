@@ -38,7 +38,8 @@ public class AppItemService implements IAppItemService {
 
 	@Override
 	public int insertSelective(Appitem record) {
-		return appItemMapper.insertSelective(record);
+		appItemMapper.insertSelective(record);
+		return record.getAppId();
 	}
 
 	@Override

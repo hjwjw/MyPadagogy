@@ -5,6 +5,10 @@
     <id column="APP_ID" property="appId" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="img_1" property="img1" jdbcType="VARCHAR" />
+    <result column="img_2" property="img2" jdbcType="VARCHAR" />
+    <result column="img_3" property="img3" jdbcType="VARCHAR" />
     <result column="DOWN_LINK" property="downLink" jdbcType="VARCHAR" />
     <result column="CREATETIME" property="createtime" jdbcType="DATE" />
     <result column="STATE" property="state" jdbcType="BIT" />
@@ -17,7 +21,7 @@
     <result column="INTRODUCE" property="introduce" jdbcType="LONGVARCHAR" />
   </resultMap> 
   <sql id="Base_Column_List" >
-    APP_ID, USER_ID, NAME, DOWN_LINK, CREATETIME, STATE, COUNT, SUPPORT, DISLIKE
+    APP_ID, USER_ID, NAME,logo, img_1, img_2, img_3, DOWN_LINK, CREATETIME, STATE, COUNT, SUPPORT, DISLIKE
   </sql>
   <sql id="Blob_Column_List" >
     INTRODUCE
@@ -52,25 +56,37 @@
   </delete>
   <insert id="insert" parameterType="com.chinesepw.po.Appitem" >
     insert into appitem (APP_ID, USER_ID, NAME, 
+      logo, img_1, img_2, img_3, 
       DOWN_LINK, CREATETIME, STATE, 
       COUNT, SUPPORT, DISLIKE, 
       INTRODUCE)
-    values (#{appId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    values (#{appId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{logo,jdbcType=VARCHAR}, #{img1,jdbcType=VARCHAR}, #{img2,jdbcType=VARCHAR}, #{img3,jdbcType=VARCHAR}, 
       #{downLink,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, #{state,jdbcType=BIT}, 
       #{count,jdbcType=INTEGER}, #{support,jdbcType=INTEGER}, #{dislike,jdbcType=INTEGER}, 
       #{introduce,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.chinesepw.po.Appitem" >
+  <insert id="insertSelective" parameterType="com.chinesepw.po.Appitem" useGeneratedKeys="true" keyProperty="appId">
+    
     insert into appitem
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="appId != null" >
-        APP_ID,
-      </if>
       <if test="userId != null" >
         USER_ID,
       </if>
       <if test="name != null" >
         NAME,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="img1 != null" >
+        img_1,
+      </if>
+      <if test="img2 != null" >
+        img_2,
+      </if>
+      <if test="img3 != null" >
+        img_3,
       </if>
       <if test="downLink != null" >
         DOWN_LINK,
@@ -95,14 +111,24 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="appId != null" >
-        #{appId,jdbcType=INTEGER},
-      </if>
+
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
       </if>
       <if test="downLink != null" >
         #{downLink,jdbcType=VARCHAR},
@@ -136,6 +162,18 @@
       <if test="name != null" >
         NAME = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        img_1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        img_2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        img_3 = #{img3,jdbcType=VARCHAR},
+      </if>
       <if test="downLink != null" >
         DOWN_LINK = #{downLink,jdbcType=VARCHAR},
       </if>
@@ -164,6 +202,10 @@
     update appitem
     set USER_ID = #{userId,jdbcType=INTEGER},
       NAME = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      img_1 = #{img1,jdbcType=VARCHAR},
+      img_2 = #{img2,jdbcType=VARCHAR},
+      img_3 = #{img3,jdbcType=VARCHAR},
       DOWN_LINK = #{downLink,jdbcType=VARCHAR},
       CREATETIME = #{createtime,jdbcType=DATE},
       STATE = #{state,jdbcType=BIT},
@@ -177,6 +219,10 @@
     update appitem
     set USER_ID = #{userId,jdbcType=INTEGER},
       NAME = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      img_1 = #{img1,jdbcType=VARCHAR},
+      img_2 = #{img2,jdbcType=VARCHAR},
+      img_3 = #{img3,jdbcType=VARCHAR},
       DOWN_LINK = #{downLink,jdbcType=VARCHAR},
       CREATETIME = #{createtime,jdbcType=DATE},
       STATE = #{state,jdbcType=BIT},

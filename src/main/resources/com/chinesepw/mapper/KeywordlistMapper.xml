@@ -27,6 +27,14 @@
     from keywordlist
     where KEYLIST_ID = #{keylistId,jdbcType=INTEGER}
   </select>
+    <delete id="deleteByappId" parameterType="java.lang.Integer" >
+    delete from keywordlist
+    where APP_ID = #{appId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteBykeyId" parameterType="java.lang.Integer" >
+    delete from keywordlist
+    where KEY_ID = #{keyId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from keywordlist
     where KEYLIST_ID = #{keylistId,jdbcType=INTEGER}

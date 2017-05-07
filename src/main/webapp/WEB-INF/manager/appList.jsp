@@ -88,7 +88,7 @@
 											<td>${appItem.count}</td>
 											<td>${appItem.support} / ${appItem.dislike}</td>
 											<td class="text-center">
-												<a class="btn btn-primary" href="">修改</a>
+												<a class="btn btn-primary" href="appItem/up/${appItem.appId }">修改</a>
 												<a class="btn btn-danger" href="appItem/changeStateById/${appItem.appId }?p=appList">不通过</a>
 												<a class="btn btn-danger" href="appItem/del/${appItem.appId }?p=appList">删除</a>
 											</td>

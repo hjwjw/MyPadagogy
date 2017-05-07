@@ -15,6 +15,10 @@ public interface IKeywordListService {
 	
 	public List<Keywordlist> selectAppItemByKeyId(Integer keyId);
 	
+	public int deleteByappId(Integer appId);
+    
+    public int deleteBykeyId(Integer keyId);
+	
     public int deleteByPrimaryKey(Integer keylistId);
 
     public int insertSelective(Keywordlist record);

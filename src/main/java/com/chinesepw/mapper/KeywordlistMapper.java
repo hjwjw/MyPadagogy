@@ -10,6 +10,10 @@ public interface KeywordlistMapper {
 	
 	List<Keywordlist> selectAppItemByKeyId(Integer keyId);
 	
+	public int deleteByappId(Integer appId);
+    
+    public int deleteBykeyId(Integer keyId);
+	
     int deleteByPrimaryKey(Integer keylistId);
 
     int insert(Keywordlist record);

@@ -4,14 +4,13 @@
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
-%>     
+%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="<%=basePath%>"> 
+<base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>添加App</title>
+    <title>修改App</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
@@ -54,19 +53,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">添加新文章 </h1>
+                        <h1 class="page-head-line">修改文章 </h1>
                     </div>
                 </div>
                 
                  <!-- /. ROW  -->
                   <div class="row">
                     <div class="col-md-12">
-                       <form action="appItem/add" method="post" role="form" class="form-horizontal" Enctype="multipart/form-data">
+                       <form action="appItem/update/" method="post" role="form" class="form-horizontal" Enctype="multipart/form-data">
                            <div class="form-group">
                               <label for="name" class="col-md-1 control-label">名称</label>
                               <div class="col-md-3">
                                  <input type="text" class="form-control" id="name" 
-                                    placeholder="请输入名称" name="name">
+                                    placeholder="请输入名称" name="name" value="${appItem.name}">
                               </div>
                            </div>
                            <div class="form-group">
@@ -88,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                               <label for="downLink" class="col-md-1 control-label">下载链接</label>
                               <div class="col-md-5">
                                  <input type="text" class="form-control" id="downLink" name="downLink"
-                                    placeholder="请输入链接">
+                                    placeholder="请输入链接" value="${appItem.downLink}">
                               </div>
                            </div>
                            <div class="form-group">
@@ -98,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <div class="fileupload-new thumbnail" style="width: 150px; height: 100px;"><img src="assets/img/demoUpload.jpg" alt="" /></div>
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 100px; line-height: 20px;"></div>
                                         <div>
-                                            <span class="btn btn-file btn-primary"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="iconPic" id="iconPic"></span>
+                                            <span class="btn btn-file btn-primary"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="iconPic" id="iconPic" value="${appItem.logo}"></span>
                                             <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
                                         </div>
                                     </div>
@@ -114,12 +113,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </div>
                                 <script type="text/javascript"> 
                                   $('#input-dim-2').parent().css('width','80%');
+                                  
                                 </script>
                             </div>
                            <div class="form-group">
                               <label for="introduce" class="col-md-1 control-label">介绍</label>
                               <div class="col-md-10">
-                                 <textarea id="summernote" name="introduce"></textarea>
+                                 <textarea id="summernote" name="introduce">${appItem.introduce}</textarea>
                                  <script>
                                   $(document).ready(function() {
                                 	  
@@ -156,7 +156,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- /. WRAPPER  -->
 	<jsp:include page="footer.jsp" />
     <!-- /. FOOTER  -->
-
 
 </body>
 <script type="text/javascript"> 
@@ -263,7 +262,19 @@ function sendFile(files, editor, $editable) {
       maxFileSize: 1000,
       minImageWidth: 500,
       minImageHeight: 200,
-      maxFileCount:3
+      maxFileCount:3,
+      overwriteInitial: false,
+      initialPreviewAsData: true,
+      initialPreview: [
+        "${appItem.img1}",
+        "${appItem.img2}",
+     	"${appItem.img3}"
+       ],
+      initialPreviewConfig: [
+          {caption: "nature-1.jpg", size: 329892, width: "120px", url: "${appItem.img1}", key: 1},
+          {caption: "nature-2.jpg", size: 872378, width: "120px", url: "${appItem.img2}", key: 2},
+          {caption: "nature-3.jpg", size: 632762, width: "120px", url: "${appItem.img3}", key: 3}
+      ]
   }).on("fileuploaded", function(e, data) {
       var res = data.response;
       
