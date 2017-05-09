@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  <!-- /. ROW  -->
                   <div class="row">
                     <div class="col-md-12">
-                       <form action="appItem/update/" method="post" role="form" class="form-horizontal" Enctype="multipart/form-data">
+                       <form action="appItem/update/${appItem.appId}" method="post" role="form" class="form-horizontal" Enctype="multipart/form-data">
                            <div class="form-group">
                               <label for="name" class="col-md-1 control-label">名称</label>
                               <div class="col-md-3">
@@ -70,16 +70,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                            </div>
                            <div class="form-group">
                               <label for="typeName" class="col-md-1 control-label">类别</label>
-                              <div class="col-md-3">
-                                <select class="form-control" id="typeSelect" name="typeSelect"></select> 
-                                  
-                              </div>
+                              <div class="col-md-2" id="lev1Div">
+									<select class="form-control" id="typeLev1"
+										onchange="getType(1)">
+										<c:forEach items="${rootTypeList}" var="r">
+											<option value="${r.typeId }">${r.name }</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-md-2" id="lev2Div">
+									<select class="form-control" id="typeLev2"
+										onchange="getType(2)">
+									</select>
+								</div>
+								<div class="col-md-2" id="lev3Div">
+									<select class="form-control" id="typeLev3"
+										onchange="getType(3)">
+									</select>
+								</div>
+								<div class="col-md-2" id="lev4Div">
+									<select class="form-control" id="typeLev4"
+										onchange="getType(4)">
+									</select>
+								</div>
+								<div class="col-md-1">
+									<button type="button" class="btn btn-primary"
+										onclick="addType()">加入分类</button>
+								</div>
                            </div>
+                           <div class="form-group" id="tyleListDIV">
+								<label for="tyleList" class="col-md-1 control-label"></label>
+								<div class="col-md-6">
+									<ol id="tyleList"></ol>
+								</div>
+						   </div>
                            <div class="form-group">
                               <label for="typeName" class="col-md-1 control-label">标签</label>
                               <div style="height: 150px" class="col-md-9 pre-scrollable">
                                   <c:forEach items="${keywordList}" var="keyword">
-                                  	<input type="checkbox" name="keyId[]" value="${keyword.keyId }" />${keyword.name }
+                                  	<input type="checkbox" name="keyId[]" 
+	                                  	<c:forEach items="${appItemKeywordList}" var="appKey">
+	                                  		<c:if test="${appKey.keyId eq keyword.keyId }">checked</c:if>
+	                                  	</c:forEach>
+                                  	value="${keyword.keyId }" />${keyword.name }
                                   </c:forEach>
                               </div>
                            </div>
@@ -94,10 +127,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <label class="control-label col-lg-1">图标</label>
                                 <div class="col-lg-5">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail" style="width: 150px; height: 100px;"><img src="assets/img/demoUpload.jpg" alt="" /></div>
+                                        <div class="fileupload-new thumbnail" style="width: 150px; height: 100px;"><img src="${appItem.logo}" alt="" /></div>
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 100px; line-height: 20px;"></div>
                                         <div>
-                                            <span class="btn btn-file btn-primary"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="iconPic" id="iconPic" value="${appItem.logo}"></span>
+                                            <span class="btn btn-file btn-primary"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name="iconPic" id="iconPic"></span>
                                             <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
                                         </div>
                                     </div>
@@ -106,6 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="form-group">
                                 <label class="col-lg-1 control-label">滚动图</label>
                                 <div class="col-lg-11 ">
+                                <i>如不修改则使用原先上传的图片，如需要修改请重新上传</i>
                                     <input id="input-dim-2" name="focusPic" type="file" multiple class="file-loading" accept="image/*">
                                     <input type="hidden" name="img1" id="img1">
                                     <input type="hidden" name="img2" id="img2">
@@ -122,7 +156,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                  <textarea id="summernote" name="introduce">${appItem.introduce}</textarea>
                                  <script>
                                   $(document).ready(function() {
-                                	  
                                       $('#summernote').summernote({
                                           height: '300',
                                           lang:'zh-CN' ,                // set editor height
@@ -132,7 +165,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                  }  
                                              } 
                                         });
-
                                       $(".note-codable").attr("name","introduce");
                                   });
                                 </script>
@@ -141,7 +173,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                            <div class="form-group">
                               <label for="submit" class="col-md-1 control-label"></label>
                               <div class="col-md-2">
-                                 <input type="submit" class="form-control btn btn-success" id="submit" >
+                                 <input type="submit" class="form-control btn btn-success" id="submit" value="提交">
                               </div>
                            </div>
                        </form>
@@ -157,67 +189,73 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<jsp:include page="footer.jsp" />
     <!-- /. FOOTER  -->
 
+
 </body>
 <script type="text/javascript"> 
+function getType(levNum) {
+	/* alert("lev"+levNum+"change"); */
+	$.ajax({
+		url : "appItem/typeList",
+		type : "GET",
+		dataType : "json",
+		data : {
+			parentId : $('#typeLev' + levNum + ' :selected').val()
+		},
+		async : true,
+		error : function(data) {
+			console.info("error");
+			console.info(data);
+		},
+		success : function(data) {
+			console.info("success");
+			console.info(data);
+			$("#typeLev" + (levNum + 1)).empty();
+			for (var i = 0; i < data.length; i++) {
+				$("#typeLev" + (levNum + 1)).append(
+						"<option value=" + data[i].typeId + ">"
+								+ data[i].name + "</option>");
+			}
+			console.log("levnum:");
+			console.log(levNum);
+			if (levNum < 4) {
+				getType(levNum + 1);
+			}
 
-	var data =new Array();
-  /* EL表达式与JS相结合 */
-  <c:set var="index" value="0" /> 
-  <c:forEach items="${typeList}" var="type" >
-	//js中可以使用此标签，将EL表达式中的值push到数组中  
-	data['${index}'] = {id:'${type.typeId}',pid:'${type.parentId}',text:'${type.name}'}; 
-	<c:set var="index" value="${index+1}" />
-  </c:forEach>
-	
-	function TreeSelector(item,data,rootId){ 
-	this._data = data; 
-	this._item = item; 
-	this._rootId = rootId; 
-	} 
-	TreeSelector.prototype.createTree = function(){ 
-	var len =this._data.length; 
-	for( var i= 0;i<len;i++){ 
-	if ( this._data[i].pid == this._rootId){ 
-	this._item.options.add(new Option(".."+this._data[i].text,this._data[i].id)); 
-	for(var j=0;j<len;j++){ 
-	this.createSubOption(len,this._data[i],this._data[j]); 
-	} 
-	} 
-	} 
-	} 
-	TreeSelector.prototype.createSubOption = function(len,current,next){ 
-	var blank = ".."; 
-	if ( next.pid == current.id){ 
-	intLevel =0; 
-	var intlvl =this.getLevel(this._data,this._rootId,current); 
-	for(a=0;a<intlvl;a++) 
-	blank += ".."; 
-	blank += "├-"; 
-	this._item.options.add(new Option(blank + next.text,next.id)); 
-	for(var j=0;j<len;j++){ 
-	this.createSubOption(len,next,this._data[j]); 
-	} 
-	} 
-	} 
-	TreeSelector.prototype.getLevel = function(datasources,topId,currentitem){ 
-	var pid =currentitem.pid; 
-	if( pid !=topId) 
-	{ 
-	for(var i =0 ;i<datasources.length;i++) 
-	{ 
-	if( datasources[i].id == pid) 
-	{ 
-	intLevel ++; 
-	this.getLevel(datasources,topId,datasources[i]); 
-	} 
-	} 
-	} 
-	return intLevel; 
-	} 
-	
-	var ts = new TreeSelector(document.getElementById("typeSelect"),data,0); 
-	ts.createTree(); 
-	
+		}
+	});
+}
+/*
+添加分类到下面的列表中
+ */
+ window.num = 1;
+function addType() {
+	var n=0;
+	var str = "";
+	if ($("#typeLev1 :selected").text() != "") {
+		str = $("#typeLev1 :selected").text();
+		n=1;
+	}
+	if ($("#typeLev2 :selected").text() != "") {
+		str = str + ">>" + $("#typeLev2 :selected").text();
+		n=2;
+	}
+	if ($("#typeLev3 :selected").text() != "") {
+		str = str + ">>" + $("#typeLev3 :selected").text();
+		n=3;
+	}
+	if ($("#typeLev4 :selected").text() != "") {
+		str = str + ">>" + $("#typeLev4 :selected").text();
+		n=4;
+	}
+	$("#tyleListDIV").append("<input type='hidden' value='"+$('#typeLev' + n + ' :selected').val()+"' name='typeSelect' id='intputLev"+window.num+"' />");
+	$("#tyleList").append("<li id='liLev"+window.num+"'>" + str + " <button type='button' class='btn-sm btn-danger' onclick='delType("+window.num+")'>删除</button></li>");
+	window.num++;
+}
+
+	function delType(n){
+		$('#intputLev' + n).remove();
+		$('#liLev' + n).remove();
+	}
 </script> 
 <script type="text/javascript">
 
@@ -244,7 +282,6 @@ function sendFile(files, editor, $editable) {
         contentType : false,  
         processData : false,         
         success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
-        	
             $('#summernote').summernote('insertImage', data);  
         },  
         error:function(){  
@@ -265,19 +302,18 @@ function sendFile(files, editor, $editable) {
       maxFileCount:3,
       overwriteInitial: false,
       initialPreviewAsData: true,
-      initialPreview: [
-        "${appItem.img1}",
-        "${appItem.img2}",
-     	"${appItem.img3}"
+      /* initialPreview: [
+		<c:if test="${!empty appItem.img1}">"${appItem.img1}",</c:if>                      
+		<c:if test="${!empty appItem.img2}">"${appItem.img2}",</c:if>
+		<c:if test="${!empty appItem.img3}">"${appItem.img3}"</c:if>
        ],
       initialPreviewConfig: [
-          {caption: "nature-1.jpg", size: 329892, width: "120px", url: "${appItem.img1}", key: 1},
-          {caption: "nature-2.jpg", size: 872378, width: "120px", url: "${appItem.img2}", key: 2},
-          {caption: "nature-3.jpg", size: 632762, width: "120px", url: "${appItem.img3}", key: 3}
-      ]
+		<c:if test="${!empty appItem.img1}">{caption: "1.jpg", size: 329892, width: "120px", url: "${appItem.img1}", key: 1},</c:if>
+		<c:if test="${!empty appItem.img1}">{caption: "2.jpg", size: 872378, width: "120px", url: "${appItem.img2}", key: 2},</c:if>
+		<c:if test="${!empty appItem.img1}">{caption: "3.jpg", size: 632762, width: "120px", url: "${appItem.img3}", key: 3}</c:if>          
+      ] */
   }).on("fileuploaded", function(e, data) {
       var res = data.response;
-      
       $("#img"+window.imgNum).attr("value", res.success);
       window.imgNum ++;
   });

@@ -72,4 +72,14 @@ public class ApptypelistService implements IApptypelistService {
 		return apptypelistMapper.deleteBytypeId(typeId);
 	}
 
+	@Override
+	public boolean isHave(Integer typeId, Integer appId) {
+		boolean falg = false;
+		List<Apptypelist> apptypelists = apptypelistMapper.isHave(typeId, appId);
+		if (apptypelists.size() == 0) {
+			falg = true;
+		}
+		return falg;
+	}
+
 }

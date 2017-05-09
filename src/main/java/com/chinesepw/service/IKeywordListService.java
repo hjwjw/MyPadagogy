@@ -15,6 +15,8 @@ public interface IKeywordListService {
 	
 	public List<Keywordlist> selectAppItemByKeyId(Integer keyId);
 	
+	public boolean isHave(Integer keyId,Integer appId);
+	
 	public int deleteByappId(Integer appId);
     
     public int deleteBykeyId(Integer keyId);

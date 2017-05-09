@@ -27,6 +27,12 @@
     from apptypelist
     where ID = #{id,jdbcType=INTEGER}
   </select>
+    <select id="isHave" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select
+  	<include refid="Base_Column_List" />
+  	from apptypelist
+  	where TYPE_ID = #{0} AND  APP_ID = #{1}
+  </select>
    <delete id="deleteByappId" parameterType="java.lang.Integer" >
     delete from apptypelist
     where  APP_ID = #{appId,jdbcType=INTEGER}

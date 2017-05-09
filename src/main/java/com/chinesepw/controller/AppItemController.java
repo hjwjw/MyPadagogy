@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.chinesepw.po.Appitem;
 import com.chinesepw.po.AppitemCustom;
+import com.chinesepw.po.Apptype;
 import com.chinesepw.po.Apptypelist;
 import com.chinesepw.po.Keywordlist;
 import com.chinesepw.po.User;
@@ -168,9 +169,21 @@ public class AppItemController {
 	 */
 	@RequestMapping(value="/toAdd",method=RequestMethod.GET)
 	public String toAdd(Model model) {
-		model.addAttribute("typeList", iTypeService.query());
+		model.addAttribute("rootTypeList", iTypeService.selectByParentId(0));
 		model.addAttribute("keywordList", iKeywordService.queryAll());
 		return "/WEB-INF/manager/addApp";
+	}
+	
+	/**
+	 * 根据父ID查找其下的子分类
+	 * @param parentId
+	 * @return
+	 */
+	@RequestMapping(value="typeList" ,method = RequestMethod.GET)
+	@ResponseBody
+	public List<Apptype> getTypeList(Integer parentId) {
+		List<Apptype> apptypes = iTypeService.selectByParentId(parentId);
+		return apptypes;
 	}
 	
 	/**
@@ -193,13 +206,13 @@ public class AppItemController {
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-        String iconPath = req.getContextPath()+"/upload/Appicon/"+fileName;
+        String iconPath = "upload/Appicon/"+fileName;
 		
 		HttpSession session = req.getSession();
 		session.setAttribute("userId", 1);
 		Integer userId = (Integer)session.getAttribute("userId");
 		String[] keyIds = req.getParameterValues("keyId[]");
-		String typeId = req.getParameter("typeSelect");
+		String[] typeIds = req.getParameterValues("typeSelect");
 		Date createtime = new Date();
 		record.setUserId(userId);
 		record.setCreatetime(createtime);
@@ -208,16 +221,26 @@ public class AppItemController {
 		//插入类型与APP关系
 		Apptypelist apptypelist = new Apptypelist();
 		apptypelist.setAppId(appId);
-		apptypelist.setTypeId(Integer.parseInt(typeId));
-		iApptypelistService.insert(apptypelist);
+		for (String typeId : typeIds) {
+			apptypelist.setTypeId(Integer.parseInt(typeId));
+			if (iApptypelistService.isHave(apptypelist.getTypeId(), apptypelist.getAppId())) {
+				iApptypelistService.insert(apptypelist);
+			}
+		}
+		
+		
 		//插入标签与APP关系 
 		Keywordlist keywordlist = new Keywordlist();
 		for (String keyId : keyIds) {
 			keywordlist.setKeyId(Integer.parseInt(keyId));
 			keywordlist.setAppId(appId);
+			if (ikeywordListService.isHave(keywordlist.getKeyId(), keywordlist.getAppId())) {
+				ikeywordListService.insertSelective(keywordlist);
+			}
 		}
 		
-		return "redirect: queryAll";
+		
+		return "redirect: queryPending";
 	}
 	
 	
@@ -240,8 +263,10 @@ public class AppItemController {
 	@RequestMapping(value="up/{id}",method=RequestMethod.GET)
 	public String updateBefore(Model model, @PathVariable("id") Integer appId) {
 		Appitem appitem = iAppItemService.selectByPrimaryKey(appId);
-		model.addAttribute("typeList", iTypeService.query());
+		model.addAttribute("rootTypeList", iTypeService.selectByParentId(0));
+		model.addAttribute("appItemType", iApptypelistService.getTypeListByAppId(appId));
 		model.addAttribute("keywordList", iKeywordService.queryAll());
+		model.addAttribute("appItemKeywordList", ikeywordListService.selectKeywordByAppId(appId));
 		model.addAttribute("appItem", appitem);
 		return "/WEB-INF/manager/updateApp";
 	}
@@ -251,8 +276,71 @@ public class AppItemController {
 	 * @param record
 	 * @return
 	 */
-	@RequestMapping(value="update/{id}",method=RequestMethod.POST)
-	public String updateByPrimaryKeyWithBLOBs(Appitem record) {
+	@RequestMapping(value="update/{appId}",method=RequestMethod.POST)
+	public String updateByPrimaryKeyWithBLOBs(@RequestParam(value = "iconPic", required = false) MultipartFile file,Appitem record,HttpServletRequest req,HttpServletResponse resp) {
+		Appitem appitem = iAppItemService.selectByPrimaryKey(record.getAppId());
+		String[] keyIds = req.getParameterValues("keyId[]");
+		String[] typeIds = req.getParameterValues("typeSelect");
+		List<Integer> typeIdList = iApptypelistService.getTypeListByAppId(appitem.getAppId());
+		if (!file.isEmpty()) {
+			String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
+	        String fileName = file.getOriginalFilename();  
+	        System.out.println(path);  
+	        File targetFile = new File(path, fileName);  
+	        if(!targetFile.exists()){  
+	            targetFile.mkdirs();  
+	        }  
+	        //保存  
+	        try {  
+	            file.transferTo(targetFile);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        String iconPath = "upload/Appicon/"+fileName;
+	        record.setLogo(iconPath);
+		}else{
+			record.setLogo(appitem.getLogo());
+		}
+		if (record.getImg1().isEmpty()) {
+			record.setImg1(appitem.getImg1());
+		}
+		if (record.getImg2().isEmpty()) {
+			record.setImg2(appitem.getImg2());
+		}
+		if (record.getImg3().isEmpty()) {
+			record.setImg3(appitem.getImg3());
+		}
+		record.setState(appitem.getState());
+		record.setUserId(appitem.getUserId());
+		record.setCount(appitem.getCount());
+		record.setDislike(appitem.getDislike());
+		record.setSupport(appitem.getSupport());
+		record.setCreatetime(new Date());
+		//插入类型与APP关系
+		
+		if (typeIds !=null) {
+			Apptypelist apptypelist = new Apptypelist();
+			apptypelist.setAppId(appitem.getAppId());
+			iApptypelistService.deleteByappId(appitem.getAppId());
+			for (String typeId : typeIds) {
+				apptypelist.setTypeId(Integer.parseInt(typeId));
+				if (iApptypelistService.isHave(apptypelist.getTypeId(), apptypelist.getAppId())) {
+					iApptypelistService.insert(apptypelist);
+				}
+			}
+		}
+		
+		//插入标签与APP关系 
+		Keywordlist keywordlist = new Keywordlist();
+		for (String keyId : keyIds) {
+			keywordlist.setKeyId(Integer.parseInt(keyId));
+			keywordlist.setAppId(appitem.getAppId());
+			if (ikeywordListService.isHave(keywordlist.getKeyId(), keywordlist.getAppId())) {
+				ikeywordListService.insertSelective(keywordlist);
+			}
+			
+		}
+
 		iAppItemService.updateByPrimaryKeyWithBLOBs(record);
 		return "redirect: ../queryAll";
 	}
@@ -275,7 +363,7 @@ public class AppItemController {
 				}else {
 					appitem.setState(true);
 				}
-				updateByPrimaryKeyWithBLOBs(appitem);
+				iAppItemService.updateByPrimaryKeyWithBLOBs(appitem);
 			}
 		}
 		if (req.getParameter("p").equals("pending")) {
@@ -301,7 +389,7 @@ public class AppItemController {
 			}else {
 				appitem.setState(true);
 			}
-			updateByPrimaryKeyWithBLOBs(appitem);
+			iAppItemService.updateByPrimaryKeyWithBLOBs(appitem);
 		}
 		System.out.println("P:" + req.getParameter("p"));
 		if (req.getParameter("p").equals("pending")) {
@@ -397,7 +485,7 @@ public class AppItemController {
                 file.mkdirs();
             }
             myFile.transferTo(new File(url+path));
-            json.put("success", "/upload/focusPic"+path);
+            json.put("success", "upload/focusPic"+path);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -15,6 +15,8 @@ public interface IApptypelistService {
 	
 	public List<Integer> getAppListByTypeId(Integer typeId);
 	
+	public boolean isHave(Integer typeId,Integer appId);
+	
     public int deleteByappId(Integer appId);
     
     public int deleteBytypeId(Integer typeId);

@@ -10,6 +10,8 @@ public interface ApptypelistMapper {
 	
 	List<Integer> getAppListByTypeId(Integer typeId);
 	
+	List<Apptypelist> isHave(Integer typeId,Integer appId);
+	
     int deleteByappId(Integer appId);
     
     int deleteBytypeId(Integer typeId);

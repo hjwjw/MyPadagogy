@@ -10,6 +10,8 @@ public interface KeywordlistMapper {
 	
 	List<Keywordlist> selectAppItemByKeyId(Integer keyId);
 	
+	List<Keywordlist>  isHave(Integer keyId,Integer appId);
+	
 	public int deleteByappId(Integer appId);
     
     public int deleteBykeyId(Integer keyId);
