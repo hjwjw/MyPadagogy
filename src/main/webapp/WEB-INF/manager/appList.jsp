@@ -37,7 +37,7 @@
 			<div id="page-inner">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 class="page-head-line">全部文章</h1>
+						<h1 class="page-head-line">已通过文章</h1>
 					</div>
 				</div>
 				<!-- /. ROW  -->

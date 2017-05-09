@@ -214,6 +214,7 @@ public class AppItemController {
 		String[] keyIds = req.getParameterValues("keyId[]");
 		String[] typeIds = req.getParameterValues("typeSelect");
 		Date createtime = new Date();
+		record.setIntroduce(record.getIntroduce().substring(0,record.getIntroduce().length()-1));
 		record.setUserId(userId);
 		record.setCreatetime(createtime);
 		record.setLogo(iconPath);
@@ -310,6 +311,7 @@ public class AppItemController {
 		if (record.getImg3().isEmpty()) {
 			record.setImg3(appitem.getImg3());
 		}
+		record.setIntroduce(record.getIntroduce().substring(0,record.getIntroduce().length()-1));
 		record.setState(appitem.getState());
 		record.setUserId(appitem.getUserId());
 		record.setCount(appitem.getCount());

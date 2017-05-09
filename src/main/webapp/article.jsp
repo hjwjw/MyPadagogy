@@ -10,23 +10,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
-<title>首页</title>
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
 
-<!-- Owl Carousel Assets -->
-<link href="owl-carousel/owl.carousel.css" rel="stylesheet">
-<link href="owl-carousel/owl.theme.css" rel="stylesheet">
-<!-- Custom CSS -->
-<link rel="stylesheet" href="css/style.css">
-<!-- Custom Fonts -->
-<link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
-<link href='https://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
-<!-- search -->
-<link href="css/searchMeme.css" rel="stylesheet" type="text/css" />
+	<title>Padagogy</title>
+  
+	<!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
+	
+	<!-- Owl Carousel Assets -->
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="owl-carousel/owl.theme.css" rel="stylesheet">
+	
+	<!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+	
+	<!-- Custom Fonts -->
+    <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+	
+		<!-- search -->
+	<link href="css/searchMeme.css" rel="stylesheet" type="text/css" />
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,11 +40,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <script src="js/respond.min.js"></script>
     <![endif]-->
 </head>
- <body>
-	<jsp:include page="head.jsp" />
+<body>
 
-	<!-- /////////////////////////////////////////Content -->
-	<div id="page-content" class="index-page container">
+	<jsp:include page="head.jsp" />
+<!-- /////////////////////////////////////////Content -->
+	<div id="page-content" class="single-page container">
 	
 	<div class="row">
 		
@@ -46,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="main-content">
 				<article>
 					<div class="art-header">
-						<a href="single.html"><h2>Lorem ipsum dolor sit amet</h2></a>
+						<a href="#"><h2>Lorem ipsum dolor sit amet</h2></a>
 						<div class="info">
 							By <a href="#">Admin</a> June 12, 2015 - <i class="fa fa-comment"></i> 0 Comments
 							<ul class="list-inline">
@@ -63,73 +69,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</li>
 							</ul>
 						</div>
-						
-					</div>
-					<div class="art-content">
-						<img src="images/1.png" />
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor inviduntut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt orem ipsum dolor sit amet, consetetur sadipscing <a href="single.html">MORE...</a></p>
+						<div id="owl-demo1" class="owl-carousel">
+							<div class="item">
+								<img src="images/single-banner.png" />
+							</div>
+							<div class="item">
+								<img src="images/single-banner2.jpg" />
+							</div>
+						</div>
 						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> <span>Google Play</span></button>
 						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button>
 					</div>
-				</article>
-
-			  <hr>
-		  
-				<article>
-					<div class="art-header">
-						<a href="single.html"><h2>Lorem ipsum dolor sit amet</h2></a>
-						<div class="info">
-							By <a href="#">Admin</a> June 12, 2015 - <i class="fa fa-comment"></i> 0 Comments
-							<ul class="list-inline">
-								<li><a href="#" style="text-decoration: underline;color:#333;">免费</a></li>
-								<li> - </li>
-								<li>
-									<span class="rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-half-o"></i>
-									</span>
-								</li>
-							</ul>
+					<div class="art-content">
+						<p style="margin-top: 20px">Aenean feugiat in ante et blandit. Vestibulum posuere molestie risus, ac interdum magna porta non. Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ac euismod turpis.Aenean feugiat in ante et blandit. Vestibulum posuere molestie risus, ac interdum magna porta non. Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ac euismod turpis.</p>
+						<h4>Heading</h4>
+						<p style="margin-top: 20px">Aenean feugiat in ante et blandit. Vestibulum posuere molestie risus, ac interdum magna porta non. Pellentesque rutrum fringilla elementum. Curabitur tincidunt porta lorem vitae accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ac euismod turpis.</p>
+						<hr>
+						<div class="comment">
+							<h3>发表评论</h3>
+							<form name="form1" method="post" action="">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+										<input type="text" class="form-control input-lg" name="name" id="name" placeholder="Enter name" required="required" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="email" class="form-control input-lg" name="email" id="email" placeholder="Enter email" required="required" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+											placeholder="Message"></textarea>
+										</div>						
+										<button type="submit" class="btn-default btn-block" name="btnSend" id="btnSend">Send</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
-					<div class="art-content">
-						<img src="images/7.jpg" />
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor inviduntut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt orem ipsum dolor sit amet, consetetur sadipscing <a href="single.html">更多...</a></p>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> <span>Google Play</span></button>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> App Store</button>
-					</div>
 				</article>
-			  
-				<center>
-					<ul class="pagination">
-						<li>
-						  <a href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						  </a>
-						</li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li>
-						  <a href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						  </a>
-						</li>
-					</ul>
-				</center>
-		
 			</div>
 		</div>
 	
 		<div class="col-md-4">
-			<div class="bs-sidebar affix hidden-xs hidden-sm" id="sidebar">
+			<div class="bs-sidebar affix hidden-sm" id="sidebar">
 				<h3>热门下载</h3>
-				<div id="owl-demo1" class="owl-carousel">
+				<div id="owl-demo2" class="owl-carousel">
 					<div class="item">
 						<a href="single.html"><img src="images/1.png" /></a>
 					</div>
@@ -153,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 				</div>
 				<h3>最新</h3>
-				<div id="owl-demo2" class="owl-carousel">
+				<div id="owl-demo3" class="owl-carousel">
 					<div class="item">
 						<a href="single.html"><img src="images/1.png" /></a>
 					</div>
@@ -185,12 +175,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<!-- FOOTER -->
 	<jsp:include page="footer.jsp" />
-  
 	<!-- jQuery -->
 	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<!-- search -->
+		<!-- search -->
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
+
 	<script>
 		if ($(window).width() < 1199) {
 			$('#sidebar').affix({
@@ -212,7 +202,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$('#nav').affix({
 				offset: { top: $('#nav').offset().top }
 			});
-			
 		});
 	</script>
 	
@@ -220,20 +209,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="owl-carousel/owl.carousel.js"></script>
     <script>
     $(document).ready(function() {
-      $("#owl-demo1").owlCarousel({
+	  $("#owl-demo1").owlCarousel({
         autoPlay: 3000,
-        items : 3,
-		itemsDesktop : [1199,2],
-        itemsDesktopSmall : [979,2]
+        items : 1,
       });
-	  $("#owl-demo2").owlCarousel({
+      $("#owl-demo2").owlCarousel({
         autoPlay: 3000,
         items : 3,
-		itemsDesktop : [1199,2],
-        itemsDesktopSmall : [979,2]
+      });
+	  $("#owl-demo3").owlCarousel({
+        autoPlay: 3000,
+        items : 3,
       });
     });
     </script>
+
 	<!-- search -->
 	<script type="text/javascript">
 
@@ -257,7 +247,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
         });
 
-    </script>
-    
+    </script>    
 </body>
 </html>

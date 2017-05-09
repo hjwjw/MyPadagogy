@@ -45,7 +45,7 @@
                         <a href="#"><i class="fa fa-desktop "></i>app管理 <span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                             <li>
-                                <a href="appItem/queryAll"><i class="fa fa-list-alt"></i>全部文章</a>
+                                <a href="appItem/queryAll"><i class="fa fa-list-alt"></i>已通过文章</a>
                             </li> 
                             <li>
                                 <a href="appItem/queryPending"><i class="fa fa-check-square"></i>待审核文章</a>
