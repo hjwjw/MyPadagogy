@@ -8,6 +8,8 @@ import com.chinesepw.po.AppitemCustom;
 public interface AppitemMapper {
 	List<AppitemCustom> queryAll();
 	
+	List<AppitemCustom> queryAllOrderByCount();
+	
 	List<AppitemCustom> queryPending();
 	
     int deleteByPrimaryKey(Integer appId);

@@ -27,157 +27,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href='https://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
 <!-- search -->
 <link href="css/searchMeme.css" rel="stylesheet" type="text/css" />
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-    <![endif]-->
+<link href="css/wordbox.css" rel="stylesheet" type="text/css" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+	<!-- ReactJs -->
+	<script  src="js/react.js"></script>
+	<script  src="js/react-dom.js"></script>
+	<script src="js/browser.min.js"></script>
+
 </head>
  <body>
 	<jsp:include page="head.jsp" />
-
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="index-page container">
 	
 	<div class="row">
 		
-		<div class="col-md-6 col-md-offset-1">
+		<div class="col-md-6 col-md-offset-1" id="main-container">
 			<div id="main-content">
-				<article>
-					<div class="art-header">
-						<a href="single.html"><h2>Lorem ipsum dolor sit amet</h2></a>
-						<div class="info">
-							By <a href="#">Admin</a> June 12, 2015 - <i class="fa fa-comment"></i> 0 Comments
-							<ul class="list-inline">
-								<li><a href="#" style="text-decoration: underline;color:#333;">Free</a></li>
-								<li> - </li>
-								<li>
-									<span class="rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-half-o"></i>
-									</span>
-								</li>
-							</ul>
-						</div>
-						
-					</div>
-					<div class="art-content">
-						<img src="images/1.png" />
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor inviduntut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt orem ipsum dolor sit amet, consetetur sadipscing <a href="single.html">MORE...</a></p>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> <span>Google Play</span></button>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button>
-					</div>
-				</article>
-
-			  <hr>
-		  
-				<article>
-					<div class="art-header">
-						<a href="single.html"><h2>Lorem ipsum dolor sit amet</h2></a>
-						<div class="info">
-							By <a href="#">Admin</a> June 12, 2015 - <i class="fa fa-comment"></i> 0 Comments
-							<ul class="list-inline">
-								<li><a href="#" style="text-decoration: underline;color:#333;">免费</a></li>
-								<li> - </li>
-								<li>
-									<span class="rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-half-o"></i>
-									</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="art-content">
-						<img src="images/7.jpg" />
-						<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor inviduntut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.justo duo dolores et ea rebum. Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt orem ipsum dolor sit amet, consetetur sadipscing <a href="single.html">更多...</a></p>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> <span>Google Play</span></button>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> App Store</button>
-					</div>
-				</article>
-			  
-				<center>
-					<ul class="pagination">
-						<li>
-						  <a href="#" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						  </a>
-						</li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li>
-						  <a href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						  </a>
-						</li>
-					</ul>
-				</center>
-		
+				
 			</div>
 		</div>
 	
-		<div class="col-md-4">
-			<div class="bs-sidebar affix hidden-xs hidden-sm" id="sidebar">
-				<h3>热门下载</h3>
-				<div id="owl-demo1" class="owl-carousel">
-					<div class="item">
-						<a href="single.html"><img src="images/1.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/2.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/7.jpg" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/3.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/4.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/5.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/6.png" /></a>
-					</div>
-				</div>
-				<h3>最新</h3>
-				<div id="owl-demo2" class="owl-carousel">
-					<div class="item">
-						<a href="single.html"><img src="images/1.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/2.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/7.jpg" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/3.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/4.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/5.png" /></a>
-					</div>
-					<div class="item">
-						<a href="single.html"><img src="images/6.png" /></a>
-					</div>
-				</div>
+		<div class="col-md-4" id="flexFrame">
+			<div class=" bs-sidebar affix hidden-xs hidden-sm" id="sidebar">
+				<h3>标签</h3>
+				<div id="boxWord" class="wordbox"></div>
 			</div>
 		</div>
+
+		
+
     </div>
 
 	
@@ -187,10 +71,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<jsp:include page="footer.jsp" />
   
 	<!-- jQuery -->
+
+
 	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="js/wordbox.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	
 	<!-- search -->
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
+
+	<script type="text/babel" src="js/index.js"></script>
+	
+	
 	<script>
 		if ($(window).width() < 1199) {
 			$('#sidebar').affix({
@@ -258,6 +151,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
 
     </script>
-    
+
+<script type="text/javascript">
+$(function() {
+	var keywordData = [];
+	$.ajax({
+		url:'keywordRest/queryAll',
+		type:'GET',
+		async: false,
+		success:function(result){
+			keywordData = result;
+		}
+	});
+	var words = [];
+    for(var i = 0; i < keywordData.length; i++) {
+        words[i] = {
+            'title' : keywordData[i].name,
+            'url' : 'appItem/' + keywordData[i].keyId
+        }
+    }
+    var colors1 = ['#F46779', '#045DA4'];    
+    var colors2 = ['#D59A3E', '#C58B59'];    
+    var colors3 = ['#49B4E0', '#FCBDA2', '#EBADBD', '#D5C2AF', '#C0BDE5', '#CBCC7F', '#FFDA7F', '#8dd0c3', '#bbbfc6', '#a4d9ef', '#bbdb98'];
+
+    $('#boxWord').wordbox({
+        isLead: true,          
+        words: words,
+        colors: colors3,
+        borderWidth: 2,
+        isFixedWidth: true,
+        width: 320,
+		height: 400,
+
+    });
+
+    // 鼠标浮动字体变大
+    var fontSize = $('#boxWord').css('font-size');
+    $('#boxWord .box a').hover(function(event) {  
+        $(this).css({'font-size': '1.4em'});
+        event.stopPropagation();
+    }, function(event) {
+        $(this).css({'font-size': fontSize});
+        event.stopPropagation();
+    });
+
+});
+ </script>
 </body>
 </html>

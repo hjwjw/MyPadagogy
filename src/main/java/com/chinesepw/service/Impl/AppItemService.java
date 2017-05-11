@@ -53,6 +53,11 @@ public class AppItemService implements IAppItemService {
 		return appItemMapper.updateByPrimaryKeyWithBLOBs(record);
 	}
 
+	@Override
+	public List<AppitemCustom> queryAllOrderByCount() {
+		return appItemMapper.queryAllOrderByCount();
+	}
+
 
 
 

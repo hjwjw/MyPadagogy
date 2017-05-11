@@ -67,7 +67,7 @@ public class AppItemController {
 	IUserService iUserService;
 	
 	/**
-	 * 查询所有APP列表
+	 * 查询已通过的APP列表
 	 * @param model
 	 * @param pageNum
 	 * @param pageSize
@@ -83,11 +83,8 @@ public class AppItemController {
 		for (AppitemCustom ac : appitemList) {
 			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
 			ac.setTypeName(this.getTypeName(ac.getAppId()));
-			if (ac.getState()) {
-				ac.setStateStr("已通过");
-			}else{
-				ac.setStateStr("未通过");
-			}
+			ac.setStateStr("已通过");
+			
 		} 
 		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
 		model.addAttribute("appList", appitemList);

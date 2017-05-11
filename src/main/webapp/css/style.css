@@ -111,11 +111,11 @@ hr{border-color: #aaa;}
 /* ---------------------------------------------------------------------------- */	
 #page-content a{
 	color: #000;
-
 }
+#boxWord a{color:#fff}
 
 .index-page, .single-page {background-color: #FFF8F6;color: #3B3632;font-family: Asap;padding-top: 30px;}
-.index-page article img{float:left;margin-right:10px;width: 100px;}
+.index-page article img{float:left;margin-right:10px;width: 100px;height: 100px;}
 
 .single-page #owl-demo1{margin-bottom: 10px;}
 /* ----------------- */

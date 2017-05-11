@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/wordbox.css">
+
+</head>
+<body>
+
+<div id="boxWord" class="wordbox"></div>
+
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/wordbox.js"></script>
+<script type="text/javascript">
+$(function() {
+
+    var titles = ['JavaScript', 'CSS', 'HTML', 'HTML5', 'SVG', 'PHP', 'Python', 'Shell', 'WebGL', '源码之家'];
+    var words = [];
+    for(var i = 0; i < titles.length; i++) {
+        words[i] = {
+            'title' : titles[i],
+            'url' : ''
+        }
+    }
+    var colors1 = ['#F46779', '#045DA4'];    
+    var colors2 = ['#D59A3E', '#C58B59'];    
+    var colors3 = ['#49B4E0', '#FCBDA2', '#EBADBD', '#D5C2AF', '#C0BDE5', '#CBCC7F', '#FFDA7F', '#8dd0c3', '#bbbfc6', '#a4d9ef', '#bbdb98'];
+
+    $('#boxWord').wordbox({
+        isLead: true,          
+        words: words,
+        colors: colors3,
+        borderWidth: 2,
+        isFixedWidth: true,
+        width: 280,
+        height: 300
+    });
+
+    // 鼠标浮动字体变大
+    var fontSize = $('#boxWord').css('font-size');
+    $('#boxWord .box a').hover(function(event) {  
+        $(this).css({'font-size': '1.4em'});
+        event.stopPropagation();
+    }, function(event) {
+        $(this).css({'font-size': fontSize});
+        event.stopPropagation();
+    });
+
+});
+ </script>
+
+</body>
+</html>
