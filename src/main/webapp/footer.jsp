@@ -3,7 +3,7 @@
 	<footer class="container ">
 		<div class="row">
 			<div class="col-md-4">
-				<p>Copyright &copy; 2017. Padagogy All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">Padagogy 轮</a></p>
+				<p>Copyright &copy; 2017. Padagogy All rights reserved.<a target="_blank" href="index.jsp">Padagogy 轮</a></p>
 			</div>
 			<div class="col-md-4">
 				<ul class="list-inline social-buttons">
@@ -17,14 +17,14 @@
 					</li>
 				</ul>
 			</div>
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<ul class="list-inline quicklinks">
 					<li><a href="#">隐私政策</a>
 					</li>
 					<li><a href="#">使用条款</a>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</footer>
   

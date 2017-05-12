@@ -11,6 +11,12 @@
   <sql id="Base_Column_List" >
     USER_ID, USERNAME, LOGO, PASSWORD, LATE_TIME
   </sql>
+  <select id="loginUser" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from user 
+  	where USERNAME = #{0}  and PASSWORD = #{1}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

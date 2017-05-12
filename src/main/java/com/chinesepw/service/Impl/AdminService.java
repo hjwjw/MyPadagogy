@@ -50,4 +50,9 @@ public class AdminService implements IAdminService {
 		return adminMapper.queryAll();
 	}
 
+	@Override
+	public AdminUser loginUser(AdminUser adminUser) {
+		return adminMapper.loginUser(adminUser);
+	}
+
 }

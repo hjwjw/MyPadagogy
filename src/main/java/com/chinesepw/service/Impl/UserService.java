@@ -1,9 +1,12 @@
 package com.chinesepw.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chinesepw.mapper.UserMapper;
+import com.chinesepw.po.AdminUser;
 import com.chinesepw.po.User;
 import com.chinesepw.service.IUserService;
 
@@ -42,5 +45,11 @@ public class UserService implements IUserService {
 	public int updateByPrimaryKey(User record) {
 		return userMapper.updateByPrimaryKey(record);
 	}
+
+	@Override
+	public User loginUser(String userName, String password) {
+		return userMapper.loginUser(userName, password);
+	}
+
 
 }

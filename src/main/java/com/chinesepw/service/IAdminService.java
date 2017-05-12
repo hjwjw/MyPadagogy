@@ -7,6 +7,8 @@ import com.chinesepw.po.AdminUser;
 public interface IAdminService {
 	public List<AdminUser> queryAll();
 	
+	AdminUser loginUser(AdminUser adminUser);
+	
     public int deleteByPrimaryKey(Integer id);
 
     public int insert(AdminUser record);

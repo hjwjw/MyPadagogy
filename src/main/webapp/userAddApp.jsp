@@ -87,14 +87,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <![endif]-->
 </head>
 <body>
-	<jsp:include page="headSimple.jsp"></jsp:include>
+	<jsp:include page="head.jsp"></jsp:include>
 <div id="page-content" class="index-page container">
 		<div class="row">
 			<div class="col-md-3">
 				<ul class="list-group ">
-					<li class="list-group-item  "><a href="#">我的信息</a></li>
+					<li class="list-group-item  "><a href="user.jsp">我的信息</a></li>
 				   <li class="list-group-item active"><a href="#">申请新增APP</a></li>
-				   <li class="list-group-item"><a href="#">留言</a></li>
+				   <!-- <li class="list-group-item"><a href="#">留言</a></li> -->
 				</ul>
 			</div>
 			<div class="col-md-9">
@@ -185,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<!-- FOOTER -->
 	<jsp:include page="footer.jsp" />
-	
+	<script type="text/babel" src="js/head.js"></script>
 <!-- search -->
 	<script type="text/javascript">
 

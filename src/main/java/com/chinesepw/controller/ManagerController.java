@@ -1,7 +1,10 @@
 package com.chinesepw.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,5 +31,13 @@ public class ManagerController {
 		
 		model.addAttribute("PendingCount", PendingCount);
 		return "/WEB-INF/manager/index";
+	}
+	
+	@RequestMapping(value="/loginOut")
+	public void loginOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		HttpSession session = req.getSession();
+		session.invalidate();
+		resp.sendRedirect("../index.jsp");
+		
 	}
 }

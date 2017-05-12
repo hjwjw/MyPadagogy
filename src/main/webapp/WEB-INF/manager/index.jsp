@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%  
 String path = request.getContextPath();  
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+HttpSession s = request.getSession();
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-head-line">仪表盘</h1>
-                        <h1 class="page-subhead-line">欢迎 管理员 HJW ！ <br><p>今天是 2017-4-25 星期二 <br>天气 ：阵雨  22度</p>
+                        <h1 class="page-subhead-line">欢迎 管理员<%=s.getAttribute("admin") %> ！ <br><p>今天是 <%=s.getAttribute("adminLateTime") %> <br>天气 ：阵雨  22度</p>
                         </h1>
                         
                     </div>
@@ -50,22 +51,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="main-box mb-dull">
-                            <a href="#">
-                                <i class="fa fa-bar-chart fa-5x"></i>
-                                <h5>访问数据统计</h5>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
                         <div class="main-box mb-pink">
                             <a href="#">
                                 <i class="fa fa-comments fa-5x"></i>
-                                <h5>200条最新评论</h5>
+                                <h5>新增APP</h5>
                             </a>
                         </div>
                     </div>
-
+					<div class="col-md-4">
+                        <div class="main-box mb-dull">
+                            <a href="type/to">
+                                <i class="fa fa-bar-chart fa-5x"></i>
+                                <h5>管理分类</h5>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 
             </div>

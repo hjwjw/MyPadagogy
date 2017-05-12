@@ -16,7 +16,7 @@
 
                 <a href="index.jsp" class="btn btn-info" title="首页"><i class="fa fa-home fa-2x"></i></a>
                 <a href="manager/queryAll" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
-                <a href="admin/" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+                <a href="admin/loginOut" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
 
             </div>
         </nav>

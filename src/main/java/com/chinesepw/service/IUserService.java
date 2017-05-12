@@ -1,5 +1,8 @@
 package com.chinesepw.service;
 
+import java.util.List;
+
+import com.chinesepw.po.AdminUser;
 import com.chinesepw.po.User;
 
 /**
@@ -8,6 +11,8 @@ import com.chinesepw.po.User;
  * 
  */
 public interface IUserService {
+	
+	User loginUser(String userName,String password);
 	
     public int deleteByPrimaryKey(Integer userId);
 

@@ -102,7 +102,7 @@ var NavRight = React.createClass({
         return(
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="index.jsp"><span className="fa fa-home"></span> Home</a></li>
-                <li><a href="login.html"><span className="fa fa-user"></span> Login</a></li>
+                <li><a href="login.jsp"><span className="fa fa-user"></span> Login</a></li>
               </ul>
             );
     }

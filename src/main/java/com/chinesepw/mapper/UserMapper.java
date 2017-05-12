@@ -3,6 +3,9 @@ package com.chinesepw.mapper;
 import com.chinesepw.po.User;
 
 public interface UserMapper {
+	
+	User loginUser(String userName,String password);
+	
     int deleteByPrimaryKey(Integer userId);
 
     int insert(User record);

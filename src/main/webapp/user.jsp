@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 格式化 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
@@ -40,35 +42,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <![endif]-->
 </head>
 <body>
-	<jsp:include page="headSimple.jsp"></jsp:include>
+<%
+	HttpSession s = request.getSession();
+	
+%>
+
+	<jsp:include page="head.jsp"></jsp:include>
 
 <div id="page-content" class="index-page container">
 		<div class="row">
 			<div class="col-md-3">
 				<ul class="list-group ">
 					<li class="list-group-item active "><a href="#">我的信息</a></li>
-				   <li class="list-group-item"><a href="#">申请新增APP</a></li>
-				   <li class="list-group-item"><a href="#">留言</a></li>
+				   <li class="list-group-item"><a href="userAddApp.jsp">申请新增APP</a></li>
+				   <!-- <li class="list-group-item"><a href="#">留言</a></li> -->
 				</ul>
 			</div>
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<i>关联微信信息不可修改</i>
+						<i>信息不可修改</i>
 					</div>
 					<div class="panel-body">
 						<div class="list-group">
 							<div class="list-group-item">
-								<label>微信号</label>
-								<div class="list-group-item-text">黄江威</div>
+								<label>用户名</label>
+								<div class="list-group-item-text"><%=s.getAttribute("user") %></div>
 							</div>
 							<div class="list-group-item">
-								<label>微信号</label>
-								<div class="list-group-item-text">djfw</div>
+								<label>最后一次登陆时间</label>
+								<div class="list-group-item-text"><%=s.getAttribute("lateTime")%></div>
 							</div>
-							<div class="list-group-item"><label>头像</label>
+							<!-- <div class="list-group-item"><label>头像</label>
 								<div class="list-group-item-text">djfw</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -82,6 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<!-- search -->
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
+	<script type="text/babel" src="js/head.js"></script>
 <!-- search -->
 	<script type="text/javascript">
 

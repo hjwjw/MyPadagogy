@@ -2,12 +2,14 @@ package com.chinesepw.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.lang.model.element.Element;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chinesepw.po.AdminUser;
 import com.chinesepw.service.IAdminService;
 import com.chinesepw.util.Result;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -46,6 +49,29 @@ public class AdminController {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
+	
+	@RequestMapping(value="login",method = RequestMethod.GET)
+	public String toLogin() {
+		return "/WEB-INF/manager/login";
+	}
+	
+	@RequestMapping(value="loginAdmin",method = RequestMethod.POST)
+	public String login(AdminUser adminUser,HttpServletRequest req,HttpServletResponse resp) {
+		AdminUser ad = iAdminService.loginUser(adminUser);
+		if (ad == null) {
+			return "/WEB-INF/manager/login";
+		}else{
+			HttpSession session = req.getSession();
+			session.setAttribute("ad_id", ad.getId());
+			session.setAttribute("admin", ad.getName());
+			session.setAttribute("adminLateTime", ad.getLateTime());
+			ad.setLateTime(new Date());
+			iAdminService.updateByPrimaryKeySelective(ad);
+			req.setAttribute("adminUser", ad);
+			return "redirect:../admin";
+		}
+		
+	}
 	
 	@RequestMapping(value = "/queryAll", method = RequestMethod.GET)
 	public String query(Model model, @RequestParam(defaultValue = "1") int pageNum,

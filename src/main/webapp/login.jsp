@@ -40,21 +40,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <![endif]-->
 </head>
 <body>
-	<jsp:include page="headSimple.jsp" />
+	<jsp:include page="head.jsp" />
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="index-page container">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-offset-3 col-md-5">
     <div class="panel panel-info">
     <div class="panel-body">
-    <form role="form" class="form-horizontal">
+    <form role="form" class="form-horizontal col-md-10" action="user/login" method="post">
       <div class="form-group">
       <label>用户名:</label>
-        <input type="text" name="userNmae" class="form-control" />
+        <input type="text" name="userName" class="form-control" />
       </div>
       <div class="form-group">
       <label>密  码:</label>
-        <input type="text" name="userNmae" class="form-control" />
+        <input type="password" name="password" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<!-- search -->
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
-	
+	<script type="text/babel" src="js/head.js"></script>	
 	
 	
 	<!-- search -->
