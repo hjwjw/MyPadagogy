@@ -8,15 +8,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chinesepw.po.Appitem;
+import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.po.Keyword;
 import com.chinesepw.po.Keywordlist;
+import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IKeywordListService;
+import com.chinesepw.service.IKeywordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -31,9 +35,10 @@ public class KeywordListController {
 	@Autowired
 	IKeywordListService iKeywordListService;
 	@Autowired
-	KeywordController keywordController;
+	IKeywordService ikeywordService;
 	@Autowired
-	AppItemController appItemController;
+	IAppItemService iappitemService;
+
 
 	/**
 	 * 通过appid查找app的标签分页输出
@@ -53,7 +58,7 @@ public class KeywordListController {
 		keywordlists = iKeywordListService.selectKeywordByAppId(appId);
 		
 		for (Keywordlist keywordlist : keywordlists) {
-			keywords.add(keywordController.selectByPrimaryKey(keywordlist.getKeyId()));
+			keywords.add(ikeywordService.selectByPrimaryKey(keywordlist.getKeyId()));
 		}
 		return new PageInfo<Keyword>(keywords);
 	}
@@ -67,18 +72,35 @@ public class KeywordListController {
 	 * @param resp
 	 * @return
 	 */
-	@RequestMapping(value="/selectAppItem",method=RequestMethod.GET)
-	public PageInfo<Appitem> selectAppItemByKeyId(Integer keyId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+	@RequestMapping(value="/selectAppItem/{id}",method=RequestMethod.GET)
+	public String selectAppItemByKeyId(Model model,@PathVariable("id") Integer keyId, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "5") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
 		List<Keywordlist> keywordlists = new ArrayList<Keywordlist>();
-		List<Appitem> appitemList = new ArrayList<Appitem>();
+		List<AppitemCustom> appitemList = new ArrayList<AppitemCustom>();
+		Keyword keyword = ikeywordService.selectByPrimaryKey(keyId); 
 		PageHelper.startPage(pageNum, pageSize);
 		keywordlists = iKeywordListService.selectAppItemByKeyId(keyId);
+		PageInfo<Keywordlist> pageInfoKey = new PageInfo<Keywordlist>(keywordlists);
 		
 		for (Keywordlist keywordlist : keywordlists) {
-			appitemList.add(appItemController.selectByPrimaryKey(keywordlist.getAppId()));
+			Integer appId = keywordlist.getAppId();
+			appitemList.add(iappitemService.selectByPrimaryKey(appId));
 		}
-		return new PageInfo<Appitem>(appitemList);
+		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
+		pageInfo.setStartRow(pageInfoKey.getStartRow());
+		pageInfo.setEndRow(pageInfoKey.getEndRow());
+		pageInfo.setTotal(pageInfoKey.getTotal());
+		pageInfo.setPages(pageInfoKey.getPages());
+		pageInfo.setNextPage(pageInfoKey.getNextPage());
+		pageInfo.setLastPage(pageInfoKey.getLastPage());
+		pageInfo.setIsLastPage(pageInfo.isIsLastPage());
+		pageInfo.setHasNextPage(pageInfoKey.isHasNextPage());
+		pageInfo.setNavigatepageNums(pageInfoKey.getNavigatepageNums());
+		pageInfo.setPageNum(pageInfoKey.getPageNum());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("appItemList", appitemList);
+		model.addAttribute("page",pageInfo);
+		return "/keyAppList";
 	}
 	
 	@RequestMapping(value="/del/{id}",method=RequestMethod.GET)

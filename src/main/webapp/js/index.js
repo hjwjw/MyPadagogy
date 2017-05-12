@@ -57,7 +57,7 @@ var ArticleData = React.createClass({
         return(
             <article>
                 <div className ='art-header'>
-                    <ArtTitle href={appItem.logo} name={appItem.name} />
+                    <ArtTitle href={appItem.appId} name={appItem.name} />
                     <ArtInfo userName={appItem.userName} createTime={appItem.createTime}
                      count={appItem.count} dislike={appItem.dislike} support={appItem.support} />
                 </div>
@@ -83,7 +83,7 @@ var ArticleData = React.createClass({
     var ArtTitle = React.createClass({
         render:function(){
             return(
-                <a href={this.props.href}><h2>{this.props.name}</h2></a>
+                <a href={"appItem/select/" + this.props.href}><h2>{this.props.name}</h2></a>
             );
         }
         

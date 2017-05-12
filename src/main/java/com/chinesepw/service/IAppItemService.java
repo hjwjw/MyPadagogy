@@ -26,7 +26,7 @@ public interface IAppItemService {
 	 */
     public int insertSelective(Appitem record);
 
-    Appitem selectByPrimaryKey(Integer appId);
+    AppitemCustom selectByPrimaryKey(Integer appId);
 
     public int updateByPrimaryKeyWithBLOBs(Appitem record);
 

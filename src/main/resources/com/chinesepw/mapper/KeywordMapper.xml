@@ -5,9 +5,10 @@
     <id column="KEY_ID" property="keyId" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="ICON_URL" property="iconUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    KEY_ID, NAME, DESCRIPTION
+    KEY_ID, NAME, DESCRIPTION, ICON_URL
   </sql>
   <select id="queryAll" resultMap="BaseResultMap" >
   	select 
@@ -25,9 +26,9 @@
     where KEY_ID = #{keyId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.chinesepw.po.Keyword" >
-    insert into keyword (KEY_ID, NAME, DESCRIPTION
+    insert into keyword (KEY_ID, NAME, DESCRIPTION,ICON_URL
       )
-    values (#{keyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+    values (#{keyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},#{iconUrl,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.chinesepw.po.Keyword" >
@@ -42,6 +43,9 @@
       <if test="description != null" >
         DESCRIPTION,
       </if>
+      <if test="iconUrl != null" >
+        ICON_URL,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="keyId != null" >
@@ -52,6 +56,9 @@
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null" >
+      	#{iconUrl,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -64,13 +71,17 @@
       <if test="description != null" >
         DESCRIPTION = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="iconUrl != null" >
+        ICON_URL = #{iconUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     where KEY_ID = #{keyId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.chinesepw.po.Keyword" >
     update keyword
     set NAME = #{name,jdbcType=VARCHAR},
-      DESCRIPTION = #{description,jdbcType=VARCHAR}
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      ICON_URL = #{iconUrl,jdbcType=VARCHAR}
     where KEY_ID = #{keyId,jdbcType=INTEGER}
   </update>
 </mapper>

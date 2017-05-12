@@ -18,7 +18,7 @@ public interface AppitemMapper {
 
     int insertSelective(Appitem record);
 
-    Appitem selectByPrimaryKey(Integer appId);
+    AppitemCustom selectByPrimaryKey(Integer appId);
 
     int updateByPrimaryKeySelective(Appitem record);
 

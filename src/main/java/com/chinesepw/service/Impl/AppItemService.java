@@ -43,7 +43,7 @@ public class AppItemService implements IAppItemService {
 	}
 
 	@Override
-	public Appitem selectByPrimaryKey(Integer appId) {
+	public AppitemCustom selectByPrimaryKey(Integer appId) {
 		return appItemMapper.selectByPrimaryKey(appId);
 	}
 

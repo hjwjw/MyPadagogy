@@ -328,7 +328,7 @@
 		uploadUrl : "appItem/uploadPics",
 		allowedFileExtensions : [ "jpg", "png" ],
 		maxFileSize : 1000,
-		minImageWidth : 500,
+		minImageWidth : 300,
 		minImageHeight : 200,
 		maxFileCount : 3
 	}).on("fileuploaded", function(e, data) {

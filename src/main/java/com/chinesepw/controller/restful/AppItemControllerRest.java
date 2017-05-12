@@ -1,11 +1,13 @@
 package com.chinesepw.controller.restful;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chinesepw.controller.AppItemController;
 import com.chinesepw.po.AppitemCustom;
+import com.chinesepw.po.Keywordlist;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
 import com.chinesepw.service.IKeywordListService;
@@ -28,7 +31,7 @@ import com.github.pagehelper.PageInfo;
  * 
  */
 @RestController
-@RequestMapping(value = "appItemRest")
+@RequestMapping(value = "/appItemRest")
 public class AppItemControllerRest {
 	@Autowired
 	AppItemController appItemController;
@@ -36,6 +39,8 @@ public class AppItemControllerRest {
 	IAppItemService iAppItemService;
 	@Autowired
 	ITypeService iTypeService;
+	@Autowired
+	IApptypelistService iapptypelistService;
 	@Autowired
 	IKeywordService iKeywordService;
 	@Autowired
@@ -47,7 +52,7 @@ public class AppItemControllerRest {
 
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	public PageInfo<AppitemCustom> queryAll(@RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+			@RequestParam(defaultValue = "6") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemList = iAppItemService.queryAll();
 		for (AppitemCustom ac : appitemList) {
@@ -69,6 +74,53 @@ public class AppItemControllerRest {
 			ac.setTypeName(appItemController.getTypeName(ac.getAppId()));
 			ac.setStateStr("已通过");
 		} 
+		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
+		return pageInfo;
+	}
+	
+	@RequestMapping(value="/queryById/{id}",method=RequestMethod.GET)
+	public AppitemCustom queryById(@PathVariable("id") Integer appId) {
+		AppitemCustom appitemCustom =  iAppItemService.selectByPrimaryKey(appId);
+		appitemCustom.setUserName(iUserService.selectByPrimaryKey(appitemCustom.getUserId()).getUsername());
+		appitemCustom.setTypeName(appItemController.getTypeName(appitemCustom.getAppId()));
+		appitemCustom.setStateStr("已通过");
+		return appitemCustom;
+	}
+	
+	/**
+	 * 按分类查找app
+	 * @param typeId
+	 * @return
+	 */
+	@RequestMapping(value="/queryByType/{id}",method = RequestMethod.GET)
+	public PageInfo<AppitemCustom> queryByType(@PathVariable("id") Integer typeId,@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "5") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Integer> appIdList = iapptypelistService.getAppListByTypeId(typeId);
+		List<AppitemCustom> appitemList= new ArrayList<AppitemCustom>();
+		for (Integer appId : appIdList) {
+			AppitemCustom appitemCustom = iAppItemService.selectByPrimaryKey(appId);
+			appitemList.add(appitemCustom);
+		}
+		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
+		return pageInfo;
+	}
+	
+	/**
+	 * 根据标签来查找app
+	 * @param keyId
+	 * @return
+	 */
+	@RequestMapping(value="/queryByKey/{id}",method=RequestMethod.GET)
+	public PageInfo<AppitemCustom> queryByKey(@PathVariable("id") Integer keyId,@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Keywordlist> keywordlists = ikeywordListService.selectAppItemByKeyId(keyId);
+		List<AppitemCustom> appitemList= new ArrayList<AppitemCustom>();
+		for (Keywordlist keywordlist : keywordlists) {
+			AppitemCustom appitemCustom = iAppItemService.selectByPrimaryKey(keywordlist.getAppId());
+			appitemList.add(appitemCustom);
+		}
 		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
 		return pageInfo;
 	}

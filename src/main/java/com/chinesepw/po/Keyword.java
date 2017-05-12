@@ -7,6 +7,8 @@ public class Keyword {
 
     private String description;
     
+    private String iconUrl;
+    
     private Integer appCount;
 
     public Integer getKeyId() {
@@ -40,6 +42,16 @@ public class Keyword {
 	public void setAppCount(Integer appCount) {
 		this.appCount = appCount;
 	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+	
+	
     
     
 }

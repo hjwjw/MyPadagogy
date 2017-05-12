@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chinesepw.mapper.AppitemMapper;
 import com.chinesepw.mapper.ApptypeMapper;
+import com.chinesepw.mapper.ApptypelistMapper;
 import com.chinesepw.po.Apptype;
 import com.chinesepw.po.TypeLev;
 import com.chinesepw.service.ITypeService;
@@ -20,6 +22,10 @@ public class TypeService implements ITypeService {
 	
 	@Autowired
 	ApptypeMapper appTypeMapper;
+	@Autowired
+	AppitemMapper appitemMapper;
+	@Autowired
+	ApptypelistMapper apptypelistMapper;
 	
 	@Override	
 	public List<Apptype> query(){
@@ -38,6 +44,8 @@ public class TypeService implements ITypeService {
 	
 	@Override
 	public int deleteByPrimaryKey(Integer typeId) {
+		apptypelistMapper.deleteBytypeId(typeId);
+		
 		return appTypeMapper.deleteByPrimaryKey(typeId);
 	}
 

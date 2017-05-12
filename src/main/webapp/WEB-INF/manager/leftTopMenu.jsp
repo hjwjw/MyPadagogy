@@ -9,14 +9,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Padagogy </a>
+                <a class="navbar-brand" href="javascript:void(0)">Padagogy </a>
             </div>
 
             <div class="header-right">
 
-                <a href="index.html" class="btn btn-info" title="首页"><i class="fa fa-home fa-2x"></i></a>
-                <a href="message-task.html" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
-                <a href="login.html" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+                <a href="index.jsp" class="btn btn-info" title="首页"><i class="fa fa-home fa-2x"></i></a>
+                <a href="manager/queryAll" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
+                <a href="admin/" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
 
             </div>
         </nav>
@@ -26,7 +26,7 @@
                 <ul class="nav" id="main-menu">
                     <li>
                         <div class="user-img-div">
-                            <img src="assets/img/user.png" class="img-thumbnail" />
+                            <img src="assets/img/user.jpg" class="img-thumbnail" />
 
                             <div class="inner-text">
                                 HJW
@@ -39,7 +39,7 @@
 
 
                     <li>
-                        <a class="active-menu" href="index.html"><i class="fa fa-dashboard "></i>仪表盘</a>
+                        <a class="active-menu" href="admin/"><i class="fa fa-dashboard "></i>仪表盘</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-desktop "></i>app管理 <span class="fa arrow"></span></a>
@@ -71,7 +71,7 @@
                                                           
                             </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="table.html"><i class="fa fa-comments "></i>留言管理 <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                  <li>
@@ -82,7 +82,7 @@
                                 </li> 
                                                           
                             </ul>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="#"><i class="fa fa-users"></i>管理员 <span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
@@ -98,7 +98,7 @@
                             </li>                          
                         </ul>
                     </li>
-                     <li>
+                    <!--  <li>
                         <a href="#"><i class="fa fa-bar-chart"></i>数据统计 <span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                            
@@ -109,7 +109,7 @@
                                 <a href="form-advance.html"><i class="fa fa-pie-chart "></i>用户数</a>
                             </li>                          
                         </ul>
-                    </li>
+                    </li> -->
                     
 
                 </ul>

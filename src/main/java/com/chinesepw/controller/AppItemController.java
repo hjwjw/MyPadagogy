@@ -191,7 +191,8 @@ public class AppItemController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String insertSelective(@RequestParam(value = "iconPic", required = false) MultipartFile file,Appitem record,HttpServletRequest req,HttpServletResponse resp)throws IOException {
 		String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
-        String fileName = file.getOriginalFilename();  
+        String fileName = file.getOriginalFilename(); 
+        System.out.println("path:");
         System.out.println(path);  
         File targetFile = new File(path, fileName);  
         if(!targetFile.exists()){  
@@ -248,8 +249,9 @@ public class AppItemController {
 	 * @return
 	 */
 	@RequestMapping(value="select/{id}",method=RequestMethod.GET)
-	public Appitem selectByPrimaryKey(@PathVariable("id") Integer appId) {
-		return iAppItemService.selectByPrimaryKey(appId);
+	public String selectByPrimaryKey(@PathVariable("id") Integer appId,Model model) {
+		model.addAttribute("appItem", iAppItemService.selectByPrimaryKey(appId));
+		return "/article";
 	}
 
 	/**
@@ -282,8 +284,11 @@ public class AppItemController {
 		List<Integer> typeIdList = iApptypelistService.getTypeListByAppId(appitem.getAppId());
 		if (!file.isEmpty()) {
 			String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
-	        String fileName = file.getOriginalFilename();  
-	        System.out.println(path);  
+	        String fileName = file.getOriginalFilename(); 
+	        String currentPath=getClass().getResource(".").getFile().toString();
+	        System.out.println(currentPath);
+	        System.out.println("path:");
+	        System.out.println(path);   
 	        File targetFile = new File(path, fileName);  
 	        if(!targetFile.exists()){  
 	            targetFile.mkdirs();  

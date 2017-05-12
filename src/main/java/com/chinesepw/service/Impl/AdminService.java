@@ -13,7 +13,7 @@ import com.chinesepw.service.IAdminService;
 public class AdminService implements IAdminService {
 	
 	@Autowired
-	private AdminUserMapper adminMapper; 
+	AdminUserMapper adminMapper; 
 	
 	@Override
 	public int deleteByPrimaryKey(Integer id) {

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 格式化 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
@@ -10,10 +12,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
-<title>首页</title>
+<title>${keyword.name } 相关的APP</title>
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
 
@@ -34,13 +37,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]-->
-	<!-- ReactJs -->
-	<script  src="js/react.js"></script>
-	<script  src="js/react-dom.js"></script>
-	<script src="js/browser.min.js"></script>
-
 </head>
- <body>
+<body>
 	<jsp:include page="head.jsp" />
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content" class="index-page container">
@@ -49,7 +47,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		<div class="col-md-6 col-md-offset-1" id="main-container">
 			<div id="main-content">
-				
+			<c:forEach items="${appItemList}" var="appItem">
+				<article>
+					<div class="art-header">
+						<a href="appItem/select/${appItem.appId}"><h2>${appItem.name }</h2></a>
+						<div class="info">
+							By <a href="javascript:void(0)">${appItem.userName }</a> 
+							<fmt:formatDate value='${appItem.createtime}' pattern='yyyy-MM-dd' />  - 
+							<i class="fa fa-comment"></i> 0 Comments
+							<ul class="list-inline">
+								<li><a href="javascript:void(0)" style="text-decoration: underline;color:#333;">分类</a></li>
+								<li> - </li>
+								<li>
+									<span class="rating">
+										<c:forEach items="${appItem.typeName}" var="next">  ${next}  | </c:forEach>
+									</span>
+								</li>
+							</ul>
+						</div>
+						
+					</div>
+					<div class="art-content">
+						<img src="${appItem.logo }" />
+						${appItem.introduce }
+						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> <span>Google Play</span></button>
+						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button>
+					</div>
+				</article>
+			  <hr>
+			  </c:forEach>
+			  
+			  <center>
+					<ul class="pagination">
+						<li
+								<c:if test="${page.pageNum eq page.firstPage}"> class='disabled' </c:if>>
+								<a href="keyList/selectAppItem/${keyword.keyId }?pageNum=${page.firstPage } " alt="首页">&laquo;</a>
+						</li>
+						<c:forEach items="${page.navigatepageNums }" var="i">
+							<li <c:if test="${page.pageNum eq i}"> class="active" </c:if>>
+									<a href="keyList/selectAppItem/${keyword.keyId}?pageNum=${i} ">${i} <span class="sr-only">(current)</span></a>
+							</li>
+						</c:forEach>
+						<li
+							<c:if test="${page.pageNum eq page.lastPage}"> class='disabled' </c:if>><a
+							href="keyList/selectAppItem/${keyword.keyId}?pageNum=${page.lastPage} " alt="最后一页">&raquo;</a></li>
+					</ul>
+				</center>
 			</div>
 		</div>
 	
@@ -77,10 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<!-- search -->
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
-
-	<script type="text/babel" src="js/index.js"></script>
 	<script type="text/babel" src="js/head.js"></script>	
-	
 	<script>
 		if ($(window).width() < 1199) {
 			$('#sidebar').affix({
@@ -106,7 +146,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	</script>
 	
-
+	<!-- carousel -->
+	<script src="owl-carousel/owl.carousel.js"></script>
+    <script>
+    $(document).ready(function() {
+      $("#owl-demo1").owlCarousel({
+        autoPlay: 3000,
+        items : 3,
+		itemsDesktop : [1199,2],
+        itemsDesktopSmall : [979,2]
+      });
+	  $("#owl-demo2").owlCarousel({
+        autoPlay: 3000,
+        items : 3,
+		itemsDesktop : [1199,2],
+        itemsDesktopSmall : [979,2]
+      });
+    });
+    </script>
 	<!-- search -->
 	<script type="text/javascript">
 
