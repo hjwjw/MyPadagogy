@@ -33,7 +33,7 @@ import com.github.pagehelper.PageInfo;
  * @author HJW 管理员操作 CURD （增删改查）
  */
 @Controller
-@RequestMapping("/manager")
+@RequestMapping("/admin")
 public class AdminController {
 
 	@Autowired
@@ -50,25 +50,22 @@ public class AdminController {
 	 * @throws ServletException 
 	 */
 	
-	@RequestMapping(value="login",method = RequestMethod.GET)
-	public String toLogin() {
-		return "/WEB-INF/manager/login";
-	}
 	
 	@RequestMapping(value="loginAdmin",method = RequestMethod.POST)
 	public String login(AdminUser adminUser,HttpServletRequest req,HttpServletResponse resp) {
 		AdminUser ad = iAdminService.loginUser(adminUser);
 		if (ad == null) {
-			return "/WEB-INF/manager/login";
+			return "../../login_ad";
 		}else{
+			System.out.println("登陆成功");
 			HttpSession session = req.getSession();
 			session.setAttribute("ad_id", ad.getId());
-			session.setAttribute("admin", ad.getName());
+			session.setAttribute("adminName", ad.getName());
 			session.setAttribute("adminLateTime", ad.getLateTime());
 			ad.setLateTime(new Date());
 			iAdminService.updateByPrimaryKeySelective(ad);
 			req.setAttribute("adminUser", ad);
-			return "redirect:../admin";
+			return "redirect:../manager";
 		}
 		
 	}
@@ -90,7 +87,7 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value="/toAdd",method=RequestMethod.GET)
-	public String toAdd() {
+	public String toAdd(Model model) {
 		return "/WEB-INF/manager/add_Manager";
 	}
 	/**

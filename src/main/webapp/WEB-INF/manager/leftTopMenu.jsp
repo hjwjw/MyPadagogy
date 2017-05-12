@@ -15,8 +15,8 @@
             <div class="header-right">
 
                 <a href="index.jsp" class="btn btn-info" title="首页"><i class="fa fa-home fa-2x"></i></a>
-                <a href="manager/queryAll" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
-                <a href="admin/loginOut" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+                <a href="admin/queryAll" class="btn btn-primary" title="管理员"><i class="fa fa-user fa-2x"></i></a>
+                <a href="manager/loginOut" class="btn btn-danger" title="退出"><i class="fa fa-exclamation-circle fa-2x"></i></a>
 
             </div>
         </nav>
@@ -39,7 +39,7 @@
 
 
                     <li>
-                        <a class="active-menu" href="admin/"><i class="fa fa-dashboard "></i>仪表盘</a>
+                        <a class="active-menu" href="manager/"><i class="fa fa-dashboard "></i>仪表盘</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-desktop "></i>app管理 <span class="fa arrow"></span></a>
@@ -88,14 +88,14 @@
                          <ul class="nav nav-second-level">
                            
                             <li>
-                                <a href="manager/queryAll"><i class="fa fa-users "></i>全部管理员 </a>
+                                <a href="admin/queryAll"><i class="fa fa-users "></i>全部管理员 </a>
                             </li>
                              <li>
-                                <a href="manager/toAdd"><i class="fa fa-plus-square"></i>新增管理员</a>
+                                <a href="admin/toAdd"><i class="fa fa-plus-square"></i>新增管理员</a>
                             </li> 
-                            <li>
+                            <!-- <li>
                                 <a href="form-advance.html"><i class="fa fa-list "></i>访问记录</a>
-                            </li>                          
+                            </li>  -->                         
                         </ul>
                     </li>
                     <!--  <li>

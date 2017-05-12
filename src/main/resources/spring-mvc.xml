@@ -52,4 +52,30 @@
 		<!-- 内存中的最大值 -->
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
+	<!-- 拦截器设置  -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+		<!-- /**  表示所有URL 包括子URL  -->
+			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/manager/**"/>
+			<mvc:mapping path="/appItem/**"/>
+			<mvc:mapping path="/keyword/**"/>
+			<mvc:mapping path="/keyList/**"/>
+			<mvc:mapping path="/type/**"/>
+			<mvc:exclude-mapping path="/admin/loginAdmin"/>
+			<mvc:exclude-mapping path="/keyList/selectAppItem/**"/>
+			<mvc:exclude-mapping path="/appItem/select/**"/>
+			<bean class="com.chinesepw.interceptor.AdminInterceptor" />
+
+
+		</mvc:interceptor>
+		<mvc:interceptor>
+		<!-- /**  表示所有URL 包括子URL  -->
+		<mvc:mapping path="/user/**"/>
+		<mvc:mapping path="user.jsp"/>
+		<mvc:exclude-mapping path="/user/login"/>
+		<bean class="com.chinesepw.interceptor.UserInterceptor"></bean>
+			
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>                        

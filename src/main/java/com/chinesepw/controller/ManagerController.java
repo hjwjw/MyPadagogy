@@ -19,7 +19,7 @@ import com.chinesepw.service.IAppItemService;
  * 
  */
 @Controller
-@RequestMapping(value="admin")
+@RequestMapping(value="manager")
 public class ManagerController {
 	
 	@Autowired
@@ -28,7 +28,6 @@ public class ManagerController {
 	@RequestMapping(value="")
 	public String Index(Model model,HttpServletRequest req, HttpServletResponse resp) {
 		Integer PendingCount = iappitemService.queryPending().size();
-		
 		model.addAttribute("PendingCount", PendingCount);
 		return "/WEB-INF/manager/index";
 	}

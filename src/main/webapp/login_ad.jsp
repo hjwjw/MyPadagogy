@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
                            
                             <div class="panel-body">
-                                <form role="form" action="manager/loginAdmin" method="post">
+                                <form role="form" action="admin/loginAdmin" method="post">
                                     <hr />
                                     <h5>Enter Details to Login</h5>
                                        <br />

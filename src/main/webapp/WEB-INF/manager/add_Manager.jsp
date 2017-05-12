@@ -48,8 +48,8 @@
 							<div class="panel-body">
 								<form role="form"
 								<c:choose>
-									<c:when test="${!empty admin}">action="manager/update/${admin.id }"</c:when>
-									<c:otherwise>action="manager/add"</c:otherwise>
+									<c:when test="${!empty admin}">action="admin/update/${admin.id}"</c:when>
+									<c:otherwise>action="admin/add"</c:otherwise>
 								</c:choose>
 								method="POST">
 									<div class="form-group">

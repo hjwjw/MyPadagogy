@@ -46,7 +46,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-						<form action="manager/selectDel" method="post" id="adminList">
+						<form action="admin/selectDel" method="post" id="adminList">
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
@@ -77,8 +77,8 @@
 											<td><fmt:formatDate value='${admin.lateTime }'
 													pattern='yyyy-MM-dd HH:mm:ss' /></td>
 											<td class="text-center"><a class="btn btn-primary"
-												href="manager/up/${admin.id }" id="ad_update">修改</a>
-												<a  href="manager/del/${admin.id }" class="btn btn-danger" value="${admin.id }"
+												href="admin/up/${admin.id }" id="ad_update">修改</a>
+												<a  href="admin/del/${admin.id }" class="btn btn-danger" value="${admin.id }"
 													 id="ad_del">删除</a></td>
 										</tr>
 
@@ -91,16 +91,16 @@
 						<ul class="pagination">
 							<li
 								<c:if test="${page.pageNum eq page.firstPage}"> class='disabled' </c:if>>
-								<a href="manager/queryAll?pageNum=${page.firstPage } " alt="首页">&laquo;</a>
+								<a href="admin/queryAll?pageNum=${page.firstPage } " alt="首页">&laquo;</a>
 							</li>
 							<c:forEach items="${page.navigatepageNums }" var="i">
 								<li <c:if test="${page.pageNum eq i}"> class="active" </c:if>>
-									<a href="manager/queryAll?pageNum=${i} ">${i} <span class="sr-only">(current)</span></a>
+									<a href="admin/queryAll?pageNum=${i} ">${i} <span class="sr-only">(current)</span></a>
 								</li>
 							</c:forEach>
 							<li
 								<c:if test="${page.pageNum eq page.lastPage}"> class='disabled' </c:if>><a
-								href="manager/queryAll?pageNum=${page.lastPage} " alt="最后一页">&raquo;</a></li>
+								href="admin/queryAll?pageNum=${page.lastPage} " alt="最后一页">&raquo;</a></li>
 						</ul>
 
 						<div class="form-group form-inline">
