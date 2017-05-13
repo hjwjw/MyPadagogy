@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                 </label>
                                             </div>
                                         </td>
-                                        <td><a href="#">${keyword.name}</a></td>
+                                        <td><a href="keyList/selectAppItem/${keyword.keyId}">${keyword.name}</a></td>
                                         <td>${keyword.appCount}</td>
                                         <td class="pre-scrollable">${keyword.description}</td>
                                         <td class="text-center" >

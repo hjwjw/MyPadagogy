@@ -1,5 +1,6 @@
 package com.chinesepw.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,9 +31,10 @@ public class UserController {
 	IUserService iUserService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(Model model,String userName,String password,HttpServletRequest req,HttpServletResponse resp) {
+	public String login(Model model,String userName,String password,HttpServletRequest req,HttpServletResponse resp) throws IOException {
 		User u = iUserService.loginUser(userName, password);
 		if (u == null) {
+			resp.sendRedirect("/MyPadagogy/login.jsp");
 			return "/login";
 		}else{
 			HttpSession session = req.getSession();

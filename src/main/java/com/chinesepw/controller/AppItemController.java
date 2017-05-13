@@ -34,6 +34,7 @@ import com.chinesepw.po.Apptype;
 import com.chinesepw.po.Apptypelist;
 import com.chinesepw.po.Keywordlist;
 import com.chinesepw.po.User;
+import com.chinesepw.service.IAdminService;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
 import com.chinesepw.service.IKeywordListService;
@@ -65,6 +66,8 @@ public class AppItemController {
 	IApptypelistService iApptypelistService;
 	@Autowired
 	IUserService iUserService;
+	@Autowired
+	IAdminService iadminService;
 	
 	/**
 	 * 查询已通过的APP列表
@@ -81,7 +84,11 @@ public class AppItemController {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemList = iAppItemService.queryAll();
 		for (AppitemCustom ac : appitemList) {
-			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			if (iUserService.selectByPrimaryKey(ac.getUserId()) == null) {
+				ac.setUserName(iadminService.selectByPrimaryKey(ac.getUserId()).getName());
+			}else{
+				ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			}
 			ac.setTypeName(this.getTypeName(ac.getAppId()));
 			ac.setStateStr("已通过");
 			
@@ -107,7 +114,11 @@ public class AppItemController {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemPendingList = iAppItemService.queryPending();
 		for (AppitemCustom ac : appitemPendingList) {
-			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			if (iUserService.selectByPrimaryKey(ac.getUserId()) == null) {
+				ac.setUserName(iadminService.selectByPrimaryKey(ac.getUserId()).getName());
+			}else{
+				ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			}
 			ac.setTypeName(this.getTypeName(ac.getAppId()));
 			ac.setStateStr("未通过");
 		} 
@@ -172,6 +183,17 @@ public class AppItemController {
 	}
 	
 	/**
+	 * 用户添加APP，带入标签与分类数据
+	 * @return
+	 */
+	@RequestMapping(value="/userToAdd",method=RequestMethod.GET)
+	public String userToAdd(Model model) {
+		model.addAttribute("rootTypeList", iTypeService.selectByParentId(0));
+		model.addAttribute("keywordList", iKeywordService.queryAll());
+		return "../userAddApp";
+	}
+	
+	/**
 	 * 根据父ID查找其下的子分类
 	 * @param parentId
 	 * @return
@@ -207,7 +229,59 @@ public class AppItemController {
         String iconPath = "upload/Appicon/"+fileName;
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("userId", 1);
+		Integer userId = (Integer)session.getAttribute("ad_id");
+		String[] keyIds = req.getParameterValues("keyId[]");
+		String[] typeIds = req.getParameterValues("typeSelect");
+		Date createtime = new Date();
+		record.setIntroduce(record.getIntroduce().substring(0,record.getIntroduce().length()-1));
+		record.setUserId(userId);
+		record.setCreatetime(createtime);
+		record.setLogo(iconPath);
+		Integer appId = iAppItemService.insertSelective(record);
+		//插入类型与APP关系
+		Apptypelist apptypelist = new Apptypelist();
+		apptypelist.setAppId(appId);
+		for (String typeId : typeIds) {
+			apptypelist.setTypeId(Integer.parseInt(typeId));
+			if (iApptypelistService.isHave(apptypelist.getTypeId(), apptypelist.getAppId())) {
+				iApptypelistService.insert(apptypelist);
+			}
+		}
+		//插入标签与APP关系 
+		Keywordlist keywordlist = new Keywordlist();
+		for (String keyId : keyIds) {
+			keywordlist.setKeyId(Integer.parseInt(keyId));
+			keywordlist.setAppId(appId);
+			if (ikeywordListService.isHave(keywordlist.getKeyId(), keywordlist.getAppId())) {
+				ikeywordListService.insertSelective(keywordlist);
+			}
+		}
+		return "redirect: queryPending";
+	}
+	
+	/**
+	 * 用户新增APP
+	 * @param record
+	 * @return
+	 */
+	@RequestMapping(value="/userAdd",method=RequestMethod.POST)
+	public String userInsertSelective(@RequestParam(value = "iconPic", required = false) MultipartFile file,Appitem record,HttpServletRequest req,HttpServletResponse resp)throws IOException {
+		String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
+        String fileName = file.getOriginalFilename(); 
+        System.out.println("path:");
+        System.out.println(path);  
+        File targetFile = new File(path, fileName);  
+        if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+        //保存  
+        try {  
+            file.transferTo(targetFile);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        String iconPath = "upload/Appicon/"+fileName;
+		HttpSession session = req.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
 		String[] keyIds = req.getParameterValues("keyId[]");
 		String[] typeIds = req.getParameterValues("typeSelect");
@@ -226,8 +300,6 @@ public class AppItemController {
 				iApptypelistService.insert(apptypelist);
 			}
 		}
-		
-		
 		//插入标签与APP关系 
 		Keywordlist keywordlist = new Keywordlist();
 		for (String keyId : keyIds) {
@@ -238,8 +310,7 @@ public class AppItemController {
 			}
 		}
 		
-		
-		return "redirect: queryPending";
+		return "redirect: userToAdd";
 	}
 	
 	
@@ -250,7 +321,19 @@ public class AppItemController {
 	 */
 	@RequestMapping(value="select/{id}",method=RequestMethod.GET)
 	public String selectByPrimaryKey(@PathVariable("id") Integer appId,Model model) {
-		model.addAttribute("appItem", iAppItemService.selectByPrimaryKey(appId));
+		AppitemCustom appitemList = iAppItemService.selectByPrimaryKey(appId);
+		Appitem appitem = appitemList;
+		appitem.setCount(appitem.getCount()+1);
+		iAppItemService.updateByPrimaryKeyWithBLOBs(appitem);
+		if (iUserService.selectByPrimaryKey(appitemList.getUserId()) == null) {
+			appitemList.setUserName(iadminService.selectByPrimaryKey(appitemList.getUserId()).getName());
+		}else{
+			appitemList.setUserName(iUserService.selectByPrimaryKey(appitemList.getUserId()).getUsername());
+		}
+		appitemList.setTypeName(this.getTypeName(appitemList.getAppId()));
+		appitemList.setStateStr("已通过");
+
+		model.addAttribute("appItem", appitemList);
 		return "/article";
 	}
 

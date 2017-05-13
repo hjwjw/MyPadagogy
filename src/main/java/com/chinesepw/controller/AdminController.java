@@ -52,10 +52,11 @@ public class AdminController {
 	
 	
 	@RequestMapping(value="loginAdmin",method = RequestMethod.POST)
-	public String login(AdminUser adminUser,HttpServletRequest req,HttpServletResponse resp) {
+	public String login(AdminUser adminUser,HttpServletRequest req,HttpServletResponse resp) throws IOException {
 		AdminUser ad = iAdminService.loginUser(adminUser);
 		if (ad == null) {
-			return "../../login_ad";
+			resp.sendRedirect("/MyPadagogy/login_ad.jsp");
+			return "/login_ad";
 		}else{
 			System.out.println("登陆成功");
 			HttpSession session = req.getSession();

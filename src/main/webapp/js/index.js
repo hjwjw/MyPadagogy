@@ -14,10 +14,6 @@ var ArticleData = React.createClass({
     this.setState({
         pageNum:event.target.value
     });
-    console.log("现在this");
-    console.log(this);
-    console.log("你点击了,现在页数是：");
-    console.log(event.target.value);
     event.stopPropagation();//停止向上冒泡
     event.preventDefault(); //阻止事件默认行为
     {this.changeData(event.target.value)}
@@ -46,7 +42,6 @@ var ArticleData = React.createClass({
         });
   },
   componentDidMount: function() {
-    console.log("我进来了");
     {this.changeData(this.state.pageNum)}
   },
   render: function() {
@@ -58,10 +53,10 @@ var ArticleData = React.createClass({
             <article>
                 <div className ='art-header'>
                     <ArtTitle href={appItem.appId} name={appItem.name} />
-                    <ArtInfo userName={appItem.userName} createTime={appItem.createTime}
+                    <ArtInfo userName={appItem.userName} createTime={appItem.createtime}
                      count={appItem.count} dislike={appItem.dislike} support={appItem.support} />
                 </div>
-                <ArtContent logo={appItem.logo} introduce={appItem.introduce}/>
+                <ArtContent logo={appItem.logo} donwLink={appItem.downLink} introduce={appItem.introduce}/>
                 <hr />
             </article>
             );
@@ -93,8 +88,7 @@ var ArticleData = React.createClass({
         render:function(){
             return(
                 <div className='info'>
-                    By {this.props.userName} {this.props.createTime} - <i className='fa fa-comment'></i> 0 Comments<br />
-                    <span ><i>阅读：{this.props.count} 人  评分：{this.props.support}/{this.props.dislike}</i></span>
+                   <span > By {this.props.userName} -- <i>浏览量：：{this.props.count} 人  </i></span>
                 </div>
                 );
          }
@@ -102,13 +96,16 @@ var ArticleData = React.createClass({
 
     var ArtContent = React.createClass({
         render:function(){
+            var that = this;
+            var s = this.props.introduce;
+            s=s.substr(0,200);
             return(
                 <div className='art-content'>
-                <img src={this.props.logo} />
-                <div dangerouslySetInnerHTML={{__html: this.props.introduce}} />
-                <br /><br />
-                <button type='submit' className='btn btn-skin'><i className='fa fa-android'></i> <span>Google Play</span></button>
-                <button type='submit' className='btn btn-skin'><i className='fa fa-apple'></i> App Store</button>
+                    <img src={this.props.logo} />
+
+                    <div dangerouslySetInnerHTML={{__html: s}} />
+                    <br /><br />
+    				<a href={this.props.donwLink} className="btn btn-skin "><i className="fa-shopping-bag"></i> <span>下载链接</span></a>
                 </div>
             );
         } 
@@ -144,106 +141,6 @@ var ArticleData = React.createClass({
                 );
         }
 
-    });
-
-
-
-    var HotAndNewest = React.createClass({
-        render:function(){
-            return(
-                <div className="bs-sidebar affix hidden-xs hidden-sm" id="sidebar">
-                    <h3>热门下载</h3>
-                    <HotApp />
-                    <h3>最新</h3>
-                    <Newest />
-                </div>
-                );
-            }
-    });
-
-    var HotApp = React.createClass({
-        getInitialState:function(){
-            return({
-                dataState:false,
-                hotdata:[]
-            });
-        },
-        componentDidMount:function(){
-            var that = this;
-            $.ajax({
-                url:'appItemRest/queryAllHot',
-                type:'GET',
-                success:function(result){
-                    console.log("获取数据成功1");
-                    console.log(result);
-                    that.setState({
-                        dataState:true,
-                        hotdata:result.list
-                    });
-                },
-                error:function(result){
-                    console.log("出错了");
-                    console.log(result);
-                }
-            });
-
-        },
-        render:function(){
-            var appItemHotList = this.state.hotdata.map(function(appItem){
-                return(
-                    <div className="item">
-                        <a href={appItem.logo}><img src={appItem.logo} /></a>
-                    </div>
-                    );
-                });
-            return(
-                <div id="owl-demo1" className="owl-carousel">
-                        {appItemHotList}
-                </div>
-                );
-        }
-    });
-
-    var Newest = React.createClass({
-        getInitialState:function(){
-            return({
-                dataState:false,
-                newestData:[]
-            });
-        },
-        componentDidMount:function(){
-            var that = this;
-            $.ajax({
-                url:'appItemRest/queryAll',
-                type:'GET',
-                success:function(result){
-                    console.log("获取数据成功2");
-                    console.log(result);
-                    that.setState({
-                        dataState:true,
-                        newestData:result.list
-                    });
-                },
-                error:function(result){
-                    console.log("出错了");
-                    console.log(result);
-                }
-            });
-        },
-        render:function(){
-            var appItemNewest = this.state.newestData.map(function(appItem){
-                return(
-                    <div className="item">
-                        <a href={appItem.logo}><img src={appItem.logo} /></a>
-                    </div>
-                    );
-              });
-            return(
-                <div id="owl-demo2" className="owl-carousel">
-                    {appItemNewest}
-                </div>
-                );
-        }
     });
 
 
@@ -285,9 +182,6 @@ var ArticleData = React.createClass({
     });
 
 
-/*ReactDOM.render(<HotAndNewest />,document.getElementById('flexFrame'));
-*/
-/*ReactDOM.render(<Keyword />,document.getElementById('sidebar'));*/
 ReactDOM.render(
   <ArticleData />,
   document.getElementById('main-container')

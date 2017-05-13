@@ -78,12 +78,12 @@
 													</label>
 												</div>
 											</td>
-											<td><a href="#">${appItem.name }</a></td>
+											<td><a href="appItem/select/${appItem.appId}">${appItem.name }</a></td>
 											<td><c:forEach items="${appItem.typeName}" var="next">  ${next}  | </c:forEach></td>
 											<%-- <td>${appItem.downLink}</td> --%>
 											<td>${appItem.userName}</td>
 											<td><fmt:formatDate value='${appItem.createtime}'
-													pattern='yyyy-MM-dd HH:mm:ss' /></td>
+													pattern='yyyy-MM-dd' /></td>
 											<td>${appItem.stateStr}</td>
 											<td>${appItem.count}</td>
 											<td>${appItem.support} / ${appItem.dislike}</td>

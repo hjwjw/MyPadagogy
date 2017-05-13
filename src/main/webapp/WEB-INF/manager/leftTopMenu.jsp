@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
+<%HttpSession ss= request.getSession(); %>   
         <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -26,12 +26,12 @@
                 <ul class="nav" id="main-menu">
                     <li>
                         <div class="user-img-div">
-                            <img src="assets/img/user.jpg" class="img-thumbnail" />
+                            <img src="assets/img/user.png" class="img-thumbnail" />
 
                             <div class="inner-text">
-                                HJW
+                                <%=ss.getAttribute("adminName") %>
                             <br />
-                                <small>最后登陆 : 2017-4-25 14：50 </small>
+                                <small>最后登陆 : <%=ss.getAttribute("adminLateTime") %> </small>
                             </div>
                         </div>
 

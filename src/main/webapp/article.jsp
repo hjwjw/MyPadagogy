@@ -54,8 +54,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a href="javascript:void(0)"><h2>${appItem.name}</h2></a>
 						<div class="info">
 							By <a href="javascript:void(0)">${appItem.userName}</a> 
-							<fmt:formatDate value='${appItem.createtime}' pattern='yyyy-MM-dd' /> - 
-							<i class="fa fa-comment"></i> 0 Comments
+							<fmt:formatDate value='${appItem.createtime}' pattern='yyyy-MM-dd' />  
+							 - <i>浏览量：</i> ${appItem.count}
 							<ul class="list-inline">
 								<li><a href="#" style="text-decoration: underline;color:#333;">分类</a></li>
 								<li> - </li>
@@ -84,15 +84,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:if>
 							
 						</div>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> <span>Google Play</span></button>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button>
+						<br>
+						<a href="${appItem.downLink }" class="btn btn-skin "><i class="fa-shopping-bag"></i> <span>下载链接</span></a>
+						<!-- <a href="#" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</a> -->
+						<br><br>
 					</div>
 					<div class="art-content">
 						${appItem.introduce }
 						<hr>
 						<div class="comment">
-							<h3>发表评论</h3>
-							<form name="form1" method="post" action="">
+							<!-- <h3>发表评论</h3> -->
+							<!-- <form name="form1" method="post" action="">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -114,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<button type="submit" class="btn-default btn-block" name="btnSend" id="btnSend">Send</button>
 									</div>
 								</div>
-							</form>
+							</form> -->
 						</div>
 					</div>
 				</article>
@@ -253,5 +255,6 @@ $(function() {
 
 });
  </script>
+
 </body>
 </html>

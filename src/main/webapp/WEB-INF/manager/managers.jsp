@@ -75,7 +75,7 @@
 											<td> ${admin.name }</td>
 											<td> ${admin.pwd }</td>
 											<td><fmt:formatDate value='${admin.lateTime }'
-													pattern='yyyy-MM-dd HH:mm:ss' /></td>
+													pattern='yyyy-MM-dd' /></td>
 											<td class="text-center"><a class="btn btn-primary"
 												href="admin/up/${admin.id }" id="ad_update">修改</a>
 												<a  href="admin/del/${admin.id }" class="btn btn-danger" value="${admin.id }"

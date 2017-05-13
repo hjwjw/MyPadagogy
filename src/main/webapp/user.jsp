@@ -3,7 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- 格式化 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%  
+<% 
+HttpSession s = request.getSession();
+if(s.getAttribute("user") == null){
+	response.sendRedirect("login.jsp");
+}
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
 %>    
@@ -42,11 +46,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <![endif]-->
 </head>
 <body>
-<%
-	HttpSession s = request.getSession();
-	
-%>
-
 	<jsp:include page="head.jsp"></jsp:include>
 
 <div id="page-content" class="index-page container">
@@ -54,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="col-md-3">
 				<ul class="list-group ">
 					<li class="list-group-item active "><a href="#">我的信息</a></li>
-				   <li class="list-group-item"><a href="userAddApp.jsp">申请新增APP</a></li>
+				   <li class="list-group-item"><a href="appItem/userToAdd">申请新增APP</a></li>
 				   <!-- <li class="list-group-item"><a href="#">留言</a></li> -->
 				</ul>
 			</div>

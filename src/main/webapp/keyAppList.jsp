@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
+<meta name="description" content="HJW">
 <title>${keyword.name } 相关的APP</title>
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="info">
 							By <a href="javascript:void(0)">${appItem.userName }</a> 
 							<fmt:formatDate value='${appItem.createtime}' pattern='yyyy-MM-dd' />  - 
-							<i class="fa fa-comment"></i> 0 Comments
+							- <i>浏览量：</i> ${appItem.count}
 							<ul class="list-inline">
 								<li><a href="javascript:void(0)" style="text-decoration: underline;color:#333;">分类</a></li>
 								<li> - </li>

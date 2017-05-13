@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chinesepw.controller.AppItemController;
+import com.chinesepw.po.Appitem;
 import com.chinesepw.po.AppitemCustom;
+import com.chinesepw.po.Apptype;
 import com.chinesepw.po.Keywordlist;
+import com.chinesepw.service.IAdminService;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
 import com.chinesepw.service.IKeywordListService;
@@ -49,6 +53,10 @@ public class AppItemControllerRest {
 	IApptypelistService iApptypelistService;
 	@Autowired
 	IUserService iUserService; 
+	@Autowired
+	IAdminService iadminService;
+	
+	private List<Apptype> apptypesAll = new ArrayList<Apptype>();
 
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	public PageInfo<AppitemCustom> queryAll(@RequestParam(defaultValue = "1") int pageNum,
@@ -56,7 +64,11 @@ public class AppItemControllerRest {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemList = iAppItemService.queryAll();
 		for (AppitemCustom ac : appitemList) {
-			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			if (iUserService.selectByPrimaryKey(ac.getUserId()) == null) {
+				ac.setUserName(iadminService.selectByPrimaryKey(ac.getUserId()).getName());
+			}else{
+				ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			}
 			ac.setTypeName(appItemController.getTypeName(ac.getAppId()));
 			ac.setStateStr("已通过");
 		} 
@@ -70,7 +82,11 @@ public class AppItemControllerRest {
 		PageHelper.startPage(pageNum, pageSize);
 		List<AppitemCustom> appitemList = iAppItemService.queryAll();
 		for (AppitemCustom ac : appitemList) {
-			ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			if (iUserService.selectByPrimaryKey(ac.getUserId()) == null) {
+				ac.setUserName(iadminService.selectByPrimaryKey(ac.getUserId()).getName());
+			}else{
+				ac.setUserName(iUserService.selectByPrimaryKey(ac.getUserId()).getUsername());
+			}
 			ac.setTypeName(appItemController.getTypeName(ac.getAppId()));
 			ac.setStateStr("已通过");
 		} 
@@ -81,10 +97,30 @@ public class AppItemControllerRest {
 	@RequestMapping(value="/queryById/{id}",method=RequestMethod.GET)
 	public AppitemCustom queryById(@PathVariable("id") Integer appId) {
 		AppitemCustom appitemCustom =  iAppItemService.selectByPrimaryKey(appId);
-		appitemCustom.setUserName(iUserService.selectByPrimaryKey(appitemCustom.getUserId()).getUsername());
+		if (iUserService.selectByPrimaryKey(appitemCustom.getUserId()) == null) {
+			appitemCustom.setUserName(iadminService.selectByPrimaryKey(appitemCustom.getUserId()).getName());
+		}else{
+			appitemCustom.setUserName(iUserService.selectByPrimaryKey(appitemCustom.getUserId()).getUsername());
+		}
 		appitemCustom.setTypeName(appItemController.getTypeName(appitemCustom.getAppId()));
 		appitemCustom.setStateStr("已通过");
 		return appitemCustom;
+	}
+	
+	/**
+	 * 递归查询一个分类下的所有子类
+	 * @param parentId
+	 */
+	public void queryChildren(Integer parentId) {
+		List<Apptype> apptypes = iTypeService.selectByParentId(parentId);
+		
+		if (apptypes!=null) {
+			for (Apptype apptype : apptypes) {
+				this.queryChildren(apptype.getTypeId());
+				apptypesAll.add(apptype);
+			}
+		}
+		
 	}
 	
 	/**
@@ -95,14 +131,31 @@ public class AppItemControllerRest {
 	@RequestMapping(value="/queryByType/{id}",method = RequestMethod.GET)
 	public PageInfo<AppitemCustom> queryByType(@PathVariable("id") Integer typeId,@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "5") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+		
+/*		apptypesAll.clear();
+		apptypesAll.add(iTypeService.selectByPrimaryKey(typeId));
+		this.queryChildren(typeId);
+		*/
 		PageHelper.startPage(pageNum, pageSize);
 		List<Integer> appIdList = iapptypelistService.getAppListByTypeId(typeId);
+		PageInfo<Integer> pageInfoKey = new PageInfo<Integer>(appIdList);
 		List<AppitemCustom> appitemList= new ArrayList<AppitemCustom>();
 		for (Integer appId : appIdList) {
 			AppitemCustom appitemCustom = iAppItemService.selectByPrimaryKey(appId);
 			appitemList.add(appitemCustom);
 		}
 		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
+		pageInfo.setStartRow(pageInfoKey.getStartRow());
+		pageInfo.setEndRow(pageInfoKey.getEndRow());
+		pageInfo.setTotal(pageInfoKey.getTotal());
+		pageInfo.setPages(pageInfoKey.getPages());
+		pageInfo.setNextPage(pageInfoKey.getNextPage());
+		pageInfo.setLastPage(pageInfoKey.getLastPage());
+		pageInfo.setIsLastPage(pageInfo.isIsLastPage());
+		pageInfo.setHasNextPage(pageInfoKey.isHasNextPage());
+		pageInfo.setNavigatepageNums(pageInfoKey.getNavigatepageNums());
+		pageInfo.setPageNum(pageInfoKey.getPageNum());
+		
 		return pageInfo;
 	}
 	
