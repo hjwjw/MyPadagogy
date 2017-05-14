@@ -22,6 +22,14 @@ public class UserInterceptor implements HandlerInterceptor {
 		if (user != null) {
 			return true;
 		}
+		String url = request.getRequestURI();
+		
+		//搜索String中的substring,默认从0位开始；
+		if (url.indexOf("/appItem/typeList") >=0) {
+			if(session.getAttribute("user") !=null || session.getAttribute("adminName") != null){
+				return true;
+			}
+		}
 
 		response.sendRedirect("/MyPadagogy/login.jsp");
 		return false;

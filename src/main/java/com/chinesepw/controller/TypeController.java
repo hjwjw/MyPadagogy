@@ -5,17 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.po.Apptype;
 import com.chinesepw.po.TypeLev;
+import com.chinesepw.service.IAppItemService;
+import com.chinesepw.service.IApptypelistService;
 import com.chinesepw.service.ITypeService;
 import com.chinesepw.util.Result;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * @author HJW
@@ -28,6 +38,10 @@ public class TypeController {
 
 	@Autowired
 	ITypeService iTypeService;
+	@Autowired
+	IAppItemService iAppItemService;
+	@Autowired
+	IApptypelistService iapptypelistService;
 
 	/**
 	 * 转发到类型管理页面(页面位于WEB-INF下不能直接访问)
@@ -48,20 +62,6 @@ public class TypeController {
 		return iTypeService.query();
 	}
 
-	/*@ResponseBody
-	@RequestMapping(value = "/queryTypeLev", method = RequestMethod.GET)
-	public List<List<TypeLev>> queryAllTypeLev() {
-		List<Apptype> apptypes = iTypeService.query();
-		List<TypeLev> typeLevs = new ArrayList<TypeLev>();
-		List<List<TypeLev>> AllTypeLev = new ArrayList<List<TypeLev>>();
-		for (Apptype apptype : apptypes) {
-			if (apptype.getParentId() == 0) {
-				typeLevs = iTypeService.queryTypeLev(apptype.getTypeId());
-				AllTypeLev.add(typeLevs);
-			}
-		}
-		return AllTypeLev;
-	}*/
 	
 	/**
 	 * 返回zTree 格式的JSON数据
@@ -84,11 +84,6 @@ public class TypeController {
 		
 	}
 
-	/*@ResponseBody
-	@RequestMapping(value = "/queryTypeLev/{id}", method = RequestMethod.GET)
-	public List<TypeLev> queryTypeLevByTypeId(@PathVariable("id") Integer typeId) {
-		return iTypeService.queryTypeLev(typeId);
-	}*/
 	
 	/**
 	 * 根据typeid 删除指定对象。并把其它的的子分类一并删除
@@ -158,5 +153,46 @@ public class TypeController {
 	@RequestMapping(value = "updateById", method = RequestMethod.POST)
 	public int updateByPrimaryKeySelective(Apptype record) {
 		return iTypeService.updateByPrimaryKeySelective(record);
+	}
+	
+	
+	/**
+	 * 按分类查找app
+	 * @param typeId
+	 * @return
+	 */
+	@RequestMapping(value="/queryByType/{id}",method = RequestMethod.GET)
+	public String queryByType(Model model,@PathVariable("id") Integer typeId,@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "5") int pageSize, HttpServletRequest req, HttpServletResponse resp) {
+		
+/*		apptypesAll.clear();
+		apptypesAll.add(iTypeService.selectByPrimaryKey(typeId));
+		this.queryChildren(typeId);
+		*/
+		Apptype type =  iTypeService.selectByPrimaryKey(typeId);
+		PageHelper.startPage(pageNum, pageSize);
+		List<Integer> appIdList = iapptypelistService.getAppListByTypeId(typeId);
+		PageInfo<Integer> pageInfoKey = new PageInfo<Integer>(appIdList);
+		List<AppitemCustom> appitemList= new ArrayList<AppitemCustom>();
+		for (Integer appId : appIdList) {
+			AppitemCustom appitemCustom = iAppItemService.selectByPrimaryKey(appId);
+			appitemList.add(appitemCustom);
+		}
+		PageInfo<AppitemCustom> pageInfo = new PageInfo<AppitemCustom>(appitemList);
+		pageInfo.setStartRow(pageInfoKey.getStartRow());
+		pageInfo.setEndRow(pageInfoKey.getEndRow());
+		pageInfo.setTotal(pageInfoKey.getTotal());
+		pageInfo.setPages(pageInfoKey.getPages());
+		pageInfo.setNextPage(pageInfoKey.getNextPage());
+		pageInfo.setLastPage(pageInfoKey.getLastPage());
+		pageInfo.setIsLastPage(pageInfo.isIsLastPage());
+		pageInfo.setHasNextPage(pageInfoKey.isHasNextPage());
+		pageInfo.setNavigatepageNums(pageInfoKey.getNavigatepageNums());
+		pageInfo.setPageNum(pageInfoKey.getPageNum());
+		
+		model.addAttribute("type", type);
+		model.addAttribute("appItemList", appitemList);
+		model.addAttribute("page", pageInfo);
+		return "/typeAppList";
 	}
 }

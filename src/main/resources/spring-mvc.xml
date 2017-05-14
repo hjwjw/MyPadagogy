@@ -67,6 +67,7 @@
 			<mvc:exclude-mapping path="/appItem/select/**"/>
 			<mvc:exclude-mapping path="/appItem/userToAdd"/>
 			<mvc:exclude-mapping path="/appItem/typeList"/>
+			<mvc:exclude-mapping path="/type/queryByType/**"/>
 			<bean class="com.chinesepw.interceptor.AdminInterceptor" />
  
 

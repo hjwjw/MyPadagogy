@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- 格式化 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
@@ -69,9 +70,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					<div class="art-content">
 						<img src="${appItem.logo }" />
-						${appItem.introduce }
-						<button type="submit" class="btn btn-skin"><i class="fa fa-android"></i> <span>Google Play</span></button>
-						<button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button>
+						${fn:substring(appItem.introduce,0,900)}
+						<br>
+						<a href="${appItem.downLink }" class="btn btn-skin "><i class="fa-shopping-bag"></i> <span>下载链接</span></a>
+						<!-- <button type="submit" class="btn btn-skin"><i class="fa fa-apple"></i> App Store</button> -->
+						<br />
 					</div>
 				</article>
 			  <hr>
@@ -146,24 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	</script>
 	
-	<!-- carousel -->
-	<script src="owl-carousel/owl.carousel.js"></script>
-    <script>
-    $(document).ready(function() {
-      $("#owl-demo1").owlCarousel({
-        autoPlay: 3000,
-        items : 3,
-		itemsDesktop : [1199,2],
-        itemsDesktopSmall : [979,2]
-      });
-	  $("#owl-demo2").owlCarousel({
-        autoPlay: 3000,
-        items : 3,
-		itemsDesktop : [1199,2],
-        itemsDesktopSmall : [979,2]
-      });
-    });
-    </script>
+	
 	<!-- search -->
 	<script type="text/javascript">
 

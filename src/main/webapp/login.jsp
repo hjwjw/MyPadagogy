@@ -46,6 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="row">
     <div class="col-md-offset-3 col-md-5">
     <div class="panel panel-info">
+    <div class="panel-heading">用户登陆</div>
     <div class="panel-body">
     <form role="form" class="form-horizontal col-md-10" action="user/login" method="post">
       <div class="form-group">

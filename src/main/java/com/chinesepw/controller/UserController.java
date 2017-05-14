@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinesepw.po.User;
 import com.chinesepw.service.IUserService;
@@ -47,6 +48,19 @@ public class UserController {
 			return "/user";
 		}
 		
+	}
+	
+	@RequestMapping(value="/loginOut")
+	public void loginOut(HttpServletRequest req,HttpServletResponse resp) throws IOException {
+		HttpSession session =req.getSession();
+		session.invalidate();
+		resp.sendRedirect("/MyPadagogy");
+	}
+	
+	@RequestMapping(value="/userReg",method = RequestMethod.POST)
+	public void register(User user,HttpServletRequest req,HttpServletResponse resp) throws IOException {
+		iUserService.insertSelective(user);
+		resp.sendRedirect("/MyPadagogy/login.jsp");
 	}
 	
 }

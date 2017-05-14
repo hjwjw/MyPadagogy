@@ -74,8 +74,21 @@
               <ul class="nav navbar-nav navbar-right">
 				      <!-- <li><input type="text" id="search-green" /></li> -->
                 <li><a href="index.jsp"><span class="fa fa-home"></span> Home</a></li>
-                <li><a href="login.jsp"><span class="fa fa-user"></span> Login</a></li>
-                <!-- <li><a href="contact.html"><span class="fa fa-envelope"></span> Contact</a></li> -->
+                <%
+                	HttpSession inout=request.getSession();
+                	if(inout.getAttribute("user") != null){
+                %>
+                <li><a href="user/loginOut"><span class="fa fa-user"></span> LoginOut</a></li>
+                <%
+                	}else{
+				%>
+				<li><a href="login.jsp"><span class="fa fa-user"></span> Login</a></li>
+				<%
+                	}
+                	
+                %>
+                
+                <li><a href="register.jsp"><span class="fa fa-user-plus"></span> Register</a></li>
               </ul>
             </div>
 		
