@@ -1,5 +1,6 @@
 package com.chinesepw.controller.restful;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,23 @@ public class TypeControllerRest {
 	@Autowired
 	ITypeService iTypeService;
 	
+	private List<Apptype> apptypesAll = new ArrayList<Apptype>();
+	/**
+	 * 递归查询一个分类下的所有子类
+	 * @param parentId
+	 */
+	public void queryChildren(Integer parentId) {
+		List<Apptype> apptypes = iTypeService.selectByParentId(parentId);
+		
+		if (apptypes!=null) {
+			for (Apptype apptype : apptypes) {
+				this.queryChildren(apptype.getTypeId());
+				apptypesAll.add(apptype);
+			}
+		}
+		
+	}
+	
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
 	public List<Apptype> queryAll() {
 		List<Apptype> appTypes = iTypeService.query();
@@ -29,7 +47,7 @@ public class TypeControllerRest {
 	}
 	
 	@RequestMapping(value="/queryParentId",method=RequestMethod.GET)
-	public List<Apptype> queryParentId(Integer parentId) {
+	public List<Apptype> queryParentId( Integer parentId) {
 		return iTypeService.selectByParentId(parentId);
 	}
 }

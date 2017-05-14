@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jquery.searchMeme.js" type="text/javascript"></script>
 
 	<script type="text/babel" src="js/index.js"></script>
-	<script type="text/babel" src="js/head.js"></script>	
+	<script type="text/javascript" src="js/head.js"></script>	
 	
 	<script>
 		if ($(window).width() < 1199) {

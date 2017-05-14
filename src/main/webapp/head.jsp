@@ -35,8 +35,8 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <!-- LEFT CONTENT -->
-              <ul class="nav navbar-nav">
-                <li class="dropdown">
+              <ul class="nav navbar-nav" id="mymenu">
+                <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">应用平台<span class="fa fa-arrow-down"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>android</a></li>
@@ -51,7 +51,7 @@
                     <li><a href="#" style="font-weight:300"><span class="glyphicon glyphicon-asterisk"></span>高数</a></li>
                     <li><a href="#" style="font-weight:300"><span class="glyphicon glyphicon-asterisk"></span>线代</a></li>
                     <li><a href="#" style="font-weight:300"><span class="glyphicon glyphicon-asterisk"></span>统计学</a></li>
-
+                
                     <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>外语</a></li>
                     <li class="divider"></li>
                     <li><a href="#" style="font-weight:300"><span class="glyphicon glyphicon-asterisk"></span>英语</a></li>
@@ -59,7 +59,7 @@
                     <li><a href="#" style="font-weight:300"><span class="glyphicon glyphicon-asterisk"></span>法语</a></li>
                   </ul>
                 </li>
-
+                
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">年龄<span class="fa fa-arrow-down"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -67,7 +67,7 @@
                     <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>中学</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span>大学</a></li>
                   </ul>
-                </li>
+                </li> -->
               </ul>
               
               <!-- RIGHT CONTENT -->
