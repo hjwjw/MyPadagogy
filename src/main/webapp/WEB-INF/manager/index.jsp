@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -35,7 +36,7 @@ HttpSession s = request.getSession();
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-head-line">仪表盘</h1>
-                        <h1 class="page-subhead-line">欢迎 管理员<%=s.getAttribute("adminName") %> ！ <br><br><p>今天是 <%=s.getAttribute("adminLateTime") %> </p>
+                        <h1 class="page-subhead-line">欢迎 管理员<%=s.getAttribute("adminName") %> ！ <br><br><p>今天是 <%=new Date() %> </p>
                         </h1>
                         
                     </div>

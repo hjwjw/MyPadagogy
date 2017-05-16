@@ -18,38 +18,61 @@ $(document)
 									+ "<span class='fa fa-arrow-down'></span></a></li>");
 		}
 	}
-
-	$("#mymenu")
-			.on(
-					'mouseover',
-					'li',
-					function() {
-						var parentId = $(this).children()[0].dataset.value;
-						var subType = queryByparent(parentId);
-						var str = '';
-						for (var i = 0; i < subType.length; i++) {
-							str += '<li><a href="type/queryByType/'+subType[i].typeId+'" data-value="'
-									+ subType[i].typeId
-									+ '"><span class="glyphicon glyphicon-asterisk"></span>'
-									+ subType[i].name
-									+ '</a></li>';
-						}
-						$(this).append(
-								'<ul class="dropdown-menu" role="menu" id="menuSub">'
-										+ str + '</ul>');
-						console.log(subType);
-					});
-
-    $("#mymenu")
+        var a=$("#mymenu").children();
+        for(var i=0;i<a.length;i++){
+            $(a[i]).on('click',function(){
+               $(this).children('ul').remove();
+                    var parentId = $(this).children()[0].dataset.value;
+                        var subType = queryByparent(parentId);
+                        
+                            var str = '';
+                        for (var i = 0; i < subType.length; i++) {
+                            str += '<li id="subli"><a href="type/queryByType/'+subType[i].typeId+'" data-value="'
+                                    + subType[i].typeId
+                                    + '"><span class="glyphicon glyphicon-asterisk"></span>'
+                                    + subType[i].name
+                                    + '</a></li>';
+                        }         
+                        $(this).append(
+                                '<ul class="dropdown-menu" role="menu" id="menuSub">'
+                                        + str + '</ul>');
+                        console.log(subType);
+                $("#subli").on('mouseover',function(){
+        console.log('11111111111111111111111111111111')
+            var parentId = $(this).children()[0].dataset.value;
+        console.log("parentId");
+        console.log(parentId);
+        var subType = queryByparent(parentId);
+                           if(flag){
+                             var str = '';
+                        for (var i = 0; i < subType.length; i++) {
+                            str += '<li id="subsubli"><a href="type/queryByType/'+subType[i].typeId+'" data-value="'
+                                    + subType[i].typeId
+                                    + '"><span class="glyphicon glyphicon-asterisk"></span>'
+                                    + subType[i].name
+                                    + '</a></li>';
+                        }
+                        $(this).after(str);
+                        console.log(subType);
+                        flag=false;
+                           }            
+                    });
+            var flag=true;
+                        
+            })
+        }
+        
+   $("#mymenu")
             .on(
-                    'mouseout',
-                    '>li:first',
+                    'mouseleave',
+                    '>li',
                     function() {
-                        $("#menuSub").remove();
+                        $("#menuSub").remove().delay(1000);
                     });
 
+  
 
-				});
+});
 
 function queryByparent(parentId) {
 	var s = [];
