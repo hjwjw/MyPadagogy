@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinesepw.po.User;
 import com.chinesepw.service.IUserService;
+import com.chinesepw.util.MD5Util;
 
 /**
  * @author HJW
@@ -25,7 +26,7 @@ import com.chinesepw.service.IUserService;
  * 
  */
 @Controller
-@RequestMapping(value="user")
+@RequestMapping(value="/user")
 public class UserController {
 	
 	@Autowired
@@ -33,6 +34,7 @@ public class UserController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(Model model,String userName,String password,HttpServletRequest req,HttpServletResponse resp) throws IOException {
+		password = MD5Util.md5Encode(password);
 		User u = iUserService.loginUser(userName, password);
 		if (u == null) {
 			resp.sendRedirect("/MyPadagogy/login.jsp");
@@ -59,6 +61,8 @@ public class UserController {
 	
 	@RequestMapping(value="/userReg",method = RequestMethod.POST)
 	public void register(User user,HttpServletRequest req,HttpServletResponse resp) throws IOException {
+		user.setPassword(MD5Util.md5Encode(user.getPassword()));
+		System.out.println(user);
 		iUserService.insertSelective(user);
 		resp.sendRedirect("/MyPadagogy/login.jsp");
 	}

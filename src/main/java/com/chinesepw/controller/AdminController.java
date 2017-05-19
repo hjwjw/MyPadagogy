@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinesepw.po.AdminUser;
 import com.chinesepw.service.IAdminService;
+import com.chinesepw.util.MD5Util;
 import com.chinesepw.util.Result;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.github.pagehelper.PageHelper;
@@ -53,6 +54,7 @@ public class AdminController {
 	
 	@RequestMapping(value="loginAdmin",method = RequestMethod.POST)
 	public String login(AdminUser adminUser,HttpServletRequest req,HttpServletResponse resp) throws IOException {
+		adminUser.setPwd(MD5Util.md5Encode(adminUser.getPwd()));
 		AdminUser ad = iAdminService.loginUser(adminUser);
 		if (ad == null) {
 			resp.sendRedirect("/MyPadagogy/login_ad.jsp");
@@ -98,6 +100,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/add", method = { RequestMethod.POST })
 	public String insertSelective(AdminUser record, HttpServletRequest req, HttpServletResponse resp) {
+		record.setPwd(MD5Util.md5Encode(record.getPwd()));
 		iAdminService.insertSelective(record);
 		return "redirect: queryAll";
 	}
@@ -155,6 +158,7 @@ public class AdminController {
 	
 	@RequestMapping(value="update/{id}",method=RequestMethod.POST)
 	public String updateByPrimaryKey(AdminUser record, HttpServletRequest req, HttpServletResponse resp) {
+		record.setPwd(MD5Util.md5Encode(record.getPwd()));
 		iAdminService.updateByPrimaryKey(record);
 		return "redirect: ../queryAll";
 		

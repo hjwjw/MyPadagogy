@@ -79,7 +79,7 @@
 		<mvc:mapping path="/appItem/userToAdd"/>
 		<mvc:mapping path="/appItem/typeList"/>
 		<mvc:exclude-mapping path="/user/login"/>
-		
+		<mvc:exclude-mapping path="/user/userReg"/>
 		<bean class="com.chinesepw.interceptor.UserInterceptor"></bean>
 			
 		</mvc:interceptor>

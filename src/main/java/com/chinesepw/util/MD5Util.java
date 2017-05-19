@@ -31,6 +31,6 @@ public class MD5Util {
 	 * @throws Exception
 	 */
 	public static void main(String args[]) throws Exception {
-//		System.out.println(MD5Util.md5Encode("你好"));
+		System.out.println(MD5Util.md5Encode("123"));
 	}
 }
