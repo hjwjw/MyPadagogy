@@ -14,13 +14,11 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +31,6 @@ import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.po.Apptype;
 import com.chinesepw.po.Apptypelist;
 import com.chinesepw.po.Keywordlist;
-import com.chinesepw.po.User;
 import com.chinesepw.service.IAdminService;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
@@ -364,7 +361,7 @@ public class AppItemController {
 		Appitem appitem = iAppItemService.selectByPrimaryKey(record.getAppId());
 		String[] keyIds = req.getParameterValues("keyId[]");
 		String[] typeIds = req.getParameterValues("typeSelect");
-		List<Integer> typeIdList = iApptypelistService.getTypeListByAppId(appitem.getAppId());
+//		List<Integer> typeIdList = iApptypelistService.getTypeListByAppId(appitem.getAppId());
 		if (!file.isEmpty()) {
 			String path = req.getSession().getServletContext().getRealPath("upload/Appicon");  
 	        String fileName = file.getOriginalFilename(); 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.chinesepw.po.Appitem;
 import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.po.Keyword;
 import com.chinesepw.po.Keywordlist;

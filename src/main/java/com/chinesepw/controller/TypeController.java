@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinesepw.po.AppitemCustom;
 import com.chinesepw.po.Apptype;
-import com.chinesepw.po.TypeLev;
 import com.chinesepw.service.IAppItemService;
 import com.chinesepw.service.IApptypelistService;
 import com.chinesepw.service.ITypeService;

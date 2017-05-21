@@ -2,7 +2,6 @@ package com.chinesepw.service.Impl;
 
 import java.util.List;
 
-import javax.mail.Flags.Flag;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chinesepw.po.AdminUser;
 import com.chinesepw.po.Keyword;
 import com.chinesepw.service.IKeywordListService;
 import com.chinesepw.service.IKeywordService;

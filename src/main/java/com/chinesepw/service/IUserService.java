@@ -1,8 +1,6 @@
 package com.chinesepw.service;
 
-import java.util.List;
 
-import com.chinesepw.po.AdminUser;
 import com.chinesepw.po.User;
 
 /**
